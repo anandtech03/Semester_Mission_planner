@@ -9,8 +9,21 @@ A modern, minimalist, animated study planner and live calendar dashboard designe
 
 ## 🚀 Live Access
 
-The dashboard is running live locally:
-- **Local URL:** [http://localhost:5173/](http://localhost:5173/)
+Production site: [https://iso123.netlify.app](https://iso123.netlify.app).
+
+For local development, run `npm ci` followed by `npm run dev`, then open
+[http://localhost:5173/](http://localhost:5173/).
+
+### Netlify deployment
+
+Netlify runs `npm ci --include=dev` to install dependencies from `package-lock.json`, then runs `npm run build`,
+and publishes `dist`. The repository's `netlify.toml` sets these options and
+Node.js 22 explicitly. Push changes to the connected `main` branch to trigger
+deployment. Generated dependencies and build output are excluded from version
+control so Netlify installs packages for its Linux environment.
+
+The current app needs no API keys or backend configuration. Study progress is
+stored in the current browser and does not sync between devices.
 
 ---
 
