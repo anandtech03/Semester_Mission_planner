@@ -1,4 +1,4 @@
-import { SubjectMeta, DaySchedule, DSAPracticeBlock, ScheduleMode } from '../types';
+import { SubjectMeta, DaySchedule } from '../types';
 
 export const SUBJECT_METAS: Record<string, SubjectMeta> = {
   COA: {
@@ -87,8 +87,8 @@ export const SUBJECT_METAS: Record<string, SubjectMeta> = {
   },
   MOCK_EXAM: {
     code: 'MOCK_EXAM',
-    name: 'First Exam Subject & Mock PYQ',
-    fullName: 'Subject with First Exam + Mock/PYQ Paper',
+    name: 'Final Mock & Exam Practice',
+    fullName: 'First Exam Subject + Grand Mock / PYQ Paper',
     shortName: 'Mock/PYQ',
     color: {
       bg: 'bg-fuchsia-500/10',
@@ -101,125 +101,10 @@ export const SUBJECT_METAS: Record<string, SubjectMeta> = {
   },
 };
 
-// DSA Practice Roadmap for Shifted Schedule (Starts 10 Nov)
-export const SHIFTED_DSA_BLOCKS: DSAPracticeBlock[] = [
-  {
-    id: 'dsa-1',
-    startDate: '2026-11-10',
-    endDate: '2026-11-13',
-    dateRangeLabel: '10–13 Nov',
-    title: 'Sorting: Bubble Sort + Selection Sort',
-    description: 'Master quadratic sorting algorithms with thorough intuition, step-by-step tracing, and optimized implementation.',
-    subtopics: [
-      { id: 'dsa-1-1', name: 'Bubble Sort: Concept & Optimization (Swapped flag)' },
-      { id: 'dsa-1-2', name: 'Bubble Sort: Dry run with edge cases & Code' },
-      { id: 'dsa-1-3', name: 'Selection Sort: Finding minimum element logic' },
-      { id: 'dsa-1-4', name: 'Selection Sort: Dry run & In-place swapping code' },
-    ],
-  },
-  {
-    id: 'dsa-2',
-    startDate: '2026-11-14',
-    endDate: '2026-11-17',
-    dateRangeLabel: '14–17 Nov',
-    title: 'Insertion Sort + Merge Sort',
-    description: 'Transition from basic insertion logic to divide-and-conquer logarithmic merge sort.',
-    subtopics: [
-      { id: 'dsa-2-1', name: 'Insertion Sort: Card-hand intuition, concept & code' },
-      { id: 'dsa-2-2', name: 'Merge Sort: Divide and conquer recursive breakdown' },
-      { id: 'dsa-2-3', name: 'Merge Sort: Merging two sorted subarrays dry run' },
-      { id: 'dsa-2-4', name: 'Merge Sort: Full implementation & O(N log N) analysis' },
-    ],
-  },
-  {
-    id: 'dsa-3',
-    startDate: '2026-11-18',
-    endDate: '2026-11-21',
-    dateRangeLabel: '18–21 Nov',
-    title: 'Quick Sort (Partition Logic, Dry Run, Code)',
-    description: 'In-depth mastery of Lomuto/Hoare partition schemes, pivot picking, and recursive sorting.',
-    subtopics: [
-      { id: 'dsa-3-1', name: 'Quick Sort: Pivot selection strategies' },
-      { id: 'dsa-3-2', name: 'Partition Logic: Lomuto vs Hoare partitioning walkthrough' },
-      { id: 'dsa-3-3', name: 'Quick Sort: Recursive tree dry run & worst-case handling' },
-      { id: 'dsa-3-4', name: 'Quick Sort: Complete clean code implementation' },
-    ],
-  },
-  {
-    id: 'dsa-4',
-    startDate: '2026-11-22',
-    endDate: '2026-11-25',
-    dateRangeLabel: '22–25 Nov',
-    title: 'Sorting Revision + Searching',
-    description: 'Comprehensive review of all 5 sorting algorithms and rigorous practice of Linear & Binary Search variants.',
-    subtopics: [
-      { id: 'dsa-4-1', name: 'Sorting Big-O comparison & stability summary matrix' },
-      { id: 'dsa-4-2', name: 'Linear Search: Basic & Sentinel search implementation' },
-      { id: 'dsa-4-3', name: 'Binary Search: Iterative & Recursive implementation' },
-      { id: 'dsa-4-4', name: 'Binary Search: Lower bound, upper bound & rotated array' },
-    ],
-  },
-  {
-    id: 'dsa-5',
-    startDate: '2026-11-26',
-    endDate: '2026-11-29',
-    dateRangeLabel: '26–29 Nov',
-    title: 'Recursion + Linked List Basics and Implementation',
-    description: 'Strengthen recursion mental models and build Singly & Doubly Linked Lists from scratch.',
-    subtopics: [
-      { id: 'dsa-5-1', name: 'Recursion: Base cases, call stack visualization & backtracking' },
-      { id: 'dsa-5-2', name: 'Singly Linked List: Insertion at head, tail, and position' },
-      { id: 'dsa-5-3', name: 'Linked List: Deletion, reversal, and cycle detection (Floyd)' },
-      { id: 'dsa-5-4', name: 'Doubly Linked List: Pointer manipulation & common pitfalls' },
-    ],
-  },
-  {
-    id: 'dsa-6',
-    startDate: '2026-11-30',
-    endDate: '2026-12-02',
-    dateRangeLabel: '30 Nov – 2 Dec',
-    title: 'Stack + Queue (Operations and Implementation)',
-    description: 'Implement LIFO and FIFO structures using arrays & linked lists, and solve classic interview problems.',
-    subtopics: [
-      { id: 'dsa-6-1', name: 'Stack: Array & Linked List implementation (push, pop, peek)' },
-      { id: 'dsa-6-2', name: 'Stack applications: Valid Parentheses & Infix/Postfix' },
-      { id: 'dsa-6-3', name: 'Queue: Linear, Circular Queue, and Deque implementations' },
-      { id: 'dsa-6-4', name: 'Queue applications: Breadth-first exploration & sliding window' },
-    ],
-  },
-  {
-    id: 'dsa-7',
-    startDate: '2026-12-03',
-    endDate: '2026-12-06',
-    dateRangeLabel: '3–6 Dec',
-    title: 'Trees + DSA Revision and Practice Questions',
-    description: 'Binary Trees, BST fundamentals, tree traversals (Inorder, Preorder, Postorder, Level-order) & holistic problem drill.',
-    subtopics: [
-      { id: 'dsa-7-1', name: 'Binary Tree: Representation, Height, Diameter, Node Count' },
-      { id: 'dsa-7-2', name: 'Traversals: DFS (Inorder, Preorder, Postorder) & BFS' },
-      { id: 'dsa-7-3', name: 'Binary Search Tree: Search, Insert, Delete, and Validation' },
-      { id: 'dsa-7-4', name: 'Final DSA Marathon: Top 10 frequently asked coding questions' },
-    ],
-  },
-];
-
-// SHIFTED SCHEDULE: 10 November to 6 December 2026 (27 Days)
-// With 9 Nov represented as Day 0 (Shifted / Rest Day) for full calendar visibility
-export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
-  // Day 0: 9 Nov (Shifted day)
-  {
-    dateStr: '2026-11-09',
-    dayNumber: 0,
-    dayName: 'Monday',
-    formattedDate: '9 Nov 2026',
-    phase: 'syllabus',
-    phaseLabel: 'Shifted Day',
-    dsaBlockId: 'dsa-1',
-    targets: [],
-  },
-
+// 21-Day Schedule: 10 November 2026 – 30 November 2026
+// All 30 syllabus units + 6 comprehensive subject revision & PYQ days completed by 30 Nov!
+export const SCHEDULE_DAYS: DaySchedule[] = [
   // PHASE 1: Full Syllabus Coverage (10 Nov – 24 Nov, 15 Days)
-  // Day 1: Starts TODAY (10 Nov)
   {
     dateStr: '2026-11-10',
     dayNumber: 1,
@@ -227,10 +112,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '10 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: 'target-coa-u1',
+        id: 'tgt-coa-u1',
         dateStr: '2026-11-10',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
@@ -239,7 +123,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Functional units, bus structures, instruction codes, computer registers, and basic computer instructions.',
       },
       {
-        id: 'target-maths-u1',
+        id: 'tgt-maths-u1',
         dateStr: '2026-11-10',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
@@ -256,10 +140,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '11 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: 'target-cyber-u1',
+        id: 'tgt-cyber-u1',
         dateStr: '2026-11-11',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
@@ -268,7 +151,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Introduction to information systems, cyber security principles, security attacks, vulnerabilities, and threats.',
       },
       {
-        id: 'target-dstl-u1',
+        id: 'tgt-dstl-u1',
         dateStr: '2026-11-11',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
@@ -285,10 +168,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '12 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: 'target-dsa-u1',
+        id: 'tgt-dsa-u1',
         dateStr: '2026-11-12',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
@@ -297,7 +179,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Introduction to data structures, asymptotic notations, time-space complexity, arrays, and recursion.',
       },
       {
-        id: 'target-hv-u1',
+        id: 'tgt-hv-u1',
         dateStr: '2026-11-12',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
@@ -314,10 +196,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '13 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: 'target-coa-u2',
+        id: 'tgt-coa-u2',
         dateStr: '2026-11-13',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
@@ -326,7 +207,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Central Processing Unit: general register organization, stack organization, addressing modes, instruction formats.',
       },
       {
-        id: 'target-maths-u2',
+        id: 'tgt-maths-u2',
         dateStr: '2026-11-13',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
@@ -343,10 +224,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '14 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: 'target-cyber-u2',
+        id: 'tgt-cyber-u2',
         dateStr: '2026-11-14',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
@@ -355,7 +235,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Application security, email security, web application vulnerabilities, SQL injection, cross-site scripting (XSS).',
       },
       {
-        id: 'target-dstl-u2',
+        id: 'tgt-dstl-u2',
         dateStr: '2026-11-14',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
@@ -372,10 +252,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '15 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: 'target-dsa-u2',
+        id: 'tgt-dsa-u2',
         dateStr: '2026-11-15',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
@@ -384,7 +263,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Stacks and Queues: representation, push/pop/enqueue/dequeue operations, circular queue, priority queue, evaluation of postfix.',
       },
       {
-        id: 'target-hv-u2',
+        id: 'tgt-hv-u2',
         dateStr: '2026-11-15',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
@@ -401,10 +280,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '16 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: 'target-coa-u3',
+        id: 'tgt-coa-u3',
         dateStr: '2026-11-16',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
@@ -413,7 +291,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Computer Arithmetic: addition and subtraction, multiplication algorithms (Booth algorithm), division algorithms.',
       },
       {
-        id: 'target-maths-u3',
+        id: 'tgt-maths-u3',
         dateStr: '2026-11-16',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
@@ -430,10 +308,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '17 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: 'target-cyber-u3',
+        id: 'tgt-cyber-u3',
         dateStr: '2026-11-17',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
@@ -442,7 +319,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Cryptography and network security, symmetric and asymmetric encryption, DES, AES, RSA, digital signatures.',
       },
       {
-        id: 'target-dstl-u3',
+        id: 'tgt-dstl-u3',
         dateStr: '2026-11-17',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
@@ -459,10 +336,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '18 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: 'target-dsa-u3',
+        id: 'tgt-dsa-u3',
         dateStr: '2026-11-18',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
@@ -471,7 +347,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Linked Lists: Singly linked list, doubly linked list, circular linked list, polynomial representation and addition.',
       },
       {
-        id: 'target-hv-u3',
+        id: 'tgt-hv-u3',
         dateStr: '2026-11-18',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
@@ -488,10 +364,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '19 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: 'target-coa-u4',
+        id: 'tgt-coa-u4',
         dateStr: '2026-11-19',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
@@ -500,7 +375,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Input-Output Organization: peripheral devices, I/O interface, asynchronous data transfer, modes of transfer, DMA controller.',
       },
       {
-        id: 'target-maths-u4',
+        id: 'tgt-maths-u4',
         dateStr: '2026-11-19',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
@@ -517,10 +392,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '20 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: 'target-cyber-u4',
+        id: 'tgt-cyber-u4',
         dateStr: '2026-11-20',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
@@ -529,7 +403,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Security policies, firewalls, IDS/IPS, cyber forensics, incident response, digital evidence collection.',
       },
       {
-        id: 'target-dstl-u4',
+        id: 'tgt-dstl-u4',
         dateStr: '2026-11-20',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
@@ -546,10 +420,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '21 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: 'target-dsa-u4',
+        id: 'tgt-dsa-u4',
         dateStr: '2026-11-21',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
@@ -558,7 +431,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Trees: binary tree, BST, tree traversals, AVL trees, insertion and balancing rotations, B-trees basics.',
       },
       {
-        id: 'target-hv-u4',
+        id: 'tgt-hv-u4',
         dateStr: '2026-11-21',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
@@ -575,10 +448,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '22 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-4',
     targets: [
       {
-        id: 'target-coa-u5',
+        id: 'tgt-coa-u5',
         dateStr: '2026-11-22',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
@@ -587,7 +459,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Memory Organization: memory hierarchy, main memory, auxiliary memory, associative memory, cache memory (mapping techniques).',
       },
       {
-        id: 'target-maths-u5',
+        id: 'tgt-maths-u5',
         dateStr: '2026-11-22',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
@@ -604,10 +476,9 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     formattedDate: '23 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-4',
     targets: [
       {
-        id: 'target-cyber-u5',
+        id: 'tgt-cyber-u5',
         dateStr: '2026-11-23',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
@@ -616,7 +487,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Cyber laws and IT Act 2000, cyber crimes, intellectual property rights, privacy issues, case studies.',
       },
       {
-        id: 'target-dstl-u5',
+        id: 'tgt-dstl-u5',
         dateStr: '2026-11-23',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
@@ -632,11 +503,10 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     dayName: 'Tuesday',
     formattedDate: '24 Nov 2026',
     phase: 'syllabus',
-    phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-4',
+    phaseLabel: 'Syllabus Coverage (Final Day)',
     targets: [
       {
-        id: 'target-dsa-u5',
+        id: 'tgt-dsa-u5',
         dateStr: '2026-11-24',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
@@ -645,7 +515,7 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Graphs and Sorting/Searching: BFS, DFS, Dijkstra algorithm, Minimum Spanning Tree (Prim, Kruskal), Hashing techniques.',
       },
       {
-        id: 'target-hv-u5',
+        id: 'tgt-hv-u5',
         dateStr: '2026-11-24',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
@@ -656,24 +526,24 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
 
-  // PHASE 2: First Revision Round (25 Nov – 30 Nov, 6 Days)
+  // PHASE 2: Fast-Track Complete Revision & PYQ Sprint (25 Nov – 30 Nov, 6 Days)
+  // 1 dedicated subject per day: covers all Units 1-5 + key formulas, diagrams, & PYQs!
   {
     dateStr: '2026-11-25',
     dayNumber: 16,
     dayName: 'Wednesday',
     formattedDate: '25 Nov 2026',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-4',
+    phase: 'revision',
+    phaseLabel: 'Fast-Track Revision',
     targets: [
       {
-        id: 'target-rev-coa-1-2',
+        id: 'rev-coa-all',
         dateStr: '2026-11-25',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
-        unit: 'Units 1 and 2',
-        title: 'COA – Units 1 and 2 + important diagrams/numericals',
-        details: 'Draw bus diagrams, practice addressing mode numericals, instruction cycle flowcharts.',
+        unit: 'Units 1 to 5',
+        title: 'COA – Complete Revision (Units 1-5 + Booth algorithm & memory hierarchy numericals)',
+        details: 'Revise bus structures, addressing modes, Booth multiplication algorithm, cache mapping numericals, and DMA data transfer.',
         isRevision: true,
       },
     ],
@@ -683,18 +553,17 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     dayNumber: 17,
     dayName: 'Thursday',
     formattedDate: '26 Nov 2026',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-5',
+    phase: 'revision',
+    phaseLabel: 'Fast-Track Revision',
     targets: [
       {
-        id: 'target-rev-maths-1-2',
+        id: 'rev-maths-all',
         dateStr: '2026-11-26',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
-        unit: 'Units 1 and 2',
-        title: 'Maths-4 – Units 1 and 2 + solved examples',
-        details: 'Solve Lagrange PDE textbook questions, practice 1D wave and heat equation standard derivations.',
+        unit: 'Units 1 to 5',
+        title: 'Maths-4 – Complete Revision (Units 1-5 + formulas, derivations & PYQ questions)',
+        details: 'Revise Lagrange PDE, 1D wave & heat equations, curve fitting, probability distributions (Binomial, Poisson, Normal), and hypothesis tests (t-test, Chi-square).',
         isRevision: true,
       },
     ],
@@ -704,18 +573,17 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     dayNumber: 18,
     dayName: 'Friday',
     formattedDate: '27 Nov 2026',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-5',
+    phase: 'revision',
+    phaseLabel: 'Fast-Track Revision',
     targets: [
       {
-        id: 'target-rev-cyber-1-2',
+        id: 'rev-cyber-all',
         dateStr: '2026-11-27',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
-        unit: 'Units 1 and 2',
-        title: 'Cyber Security – Units 1 and 2 + key definitions',
-        details: 'Memorize threat taxonomy, CIA triad, security policies, and attack vectors (SQLi, XSS, MITM).',
+        unit: 'Units 1 to 5',
+        title: 'Cyber Security – Complete Revision (Units 1-5 + RSA crypto, attack vectors & IT Act 2000)',
+        details: 'Review information system threats, SQLi & XSS mitigation, symmetric/asymmetric encryption (DES/AES/RSA), firewalls, and IT Act sections.',
         isRevision: true,
       },
     ],
@@ -725,18 +593,17 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     dayNumber: 19,
     dayName: 'Saturday',
     formattedDate: '28 Nov 2026',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-5',
+    phase: 'revision',
+    phaseLabel: 'Fast-Track Revision',
     targets: [
       {
-        id: 'target-rev-dstl-1-2',
+        id: 'rev-dstl-all',
         dateStr: '2026-11-28',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
-        unit: 'Units 1 and 2',
-        title: 'DSTL – Units 1 and 2 + important problems',
-        details: 'Solve group theory proofs, order of elements, cyclic subgroups, equivalence classes.',
+        unit: 'Units 1 to 5',
+        title: 'DSTL – Complete Revision (Units 1-5 + group theory, logic normal forms, graphs & PYQs)',
+        details: 'Revise relations, equivalence classes, Lagrange group theorem, Boolean algebra simplification, recurrence relations, and Eulerian/Hamiltonian graph proofs.',
         isRevision: true,
       },
     ],
@@ -746,18 +613,17 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     dayNumber: 20,
     dayName: 'Sunday',
     formattedDate: '29 Nov 2026',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-5',
+    phase: 'revision',
+    phaseLabel: 'Fast-Track Revision',
     targets: [
       {
-        id: 'target-rev-dsa-1-2',
+        id: 'rev-dsa-all',
         dateStr: '2026-11-29',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
-        unit: 'Units 1 and 2',
-        title: 'DSA (semester) – Units 1 and 2 + algorithms',
-        details: 'Handwrite postfix evaluation algorithm, circular queue boundary conditions, array representations.',
+        unit: 'Units 1 to 5',
+        title: 'DSA (semester) – Complete Revision (Units 1-5 + algorithms, trees, graphs & dry runs)',
+        details: 'Practice stack postfix evaluation, queue boundaries, singly/doubly linked list operations, AVL rotations, Dijkstra and Prim/Kruskal MST.',
         isRevision: true,
       },
     ],
@@ -767,229 +633,47 @@ export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
     dayNumber: 21,
     dayName: 'Monday',
     formattedDate: '30 Nov 2026',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-6',
+    phase: 'revision',
+    phaseLabel: 'Mission Finish Day',
     targets: [
       {
-        id: 'target-rev-hv-1-2',
+        id: 'rev-hv-all',
         dateStr: '2026-11-30',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
-        unit: 'Units 1 and 2',
-        title: 'Human Values – Units 1 and 2 + short notes',
-        details: 'Prepare crisp summary charts for Sanyam, Swasthya, Sukh, and self-exploration process.',
+        unit: 'Units 1 to 5',
+        title: 'Human Values – Complete Revision (Units 1-5 + short notes & ethics case studies)',
+        details: 'Review Sanyam, Swasthya, Trust, Respect, harmony in nature, and professional ethics framework.',
         isRevision: true,
       },
       {
-        id: 'target-rev-coa-3-5',
+        id: 'rev-mock-all',
         dateStr: '2026-11-30',
-        subject: 'Computer Organization and Architecture (COA)',
-        subjectCode: 'COA',
-        unit: 'Units 3, 4 and 5',
-        title: 'COA – Units 3, 4 and 5 + weak topics',
-        details: 'Booth algorithm step-by-step tracing, DMA cycle stealing vs burst mode, cache hit ratio numericals.',
-        isRevision: true,
-      },
-    ],
-  },
-
-  // PHASE 3: Final Revision + PYQs (1 Dec – 6 Dec, 6 Days)
-  {
-    dateStr: '2026-12-01',
-    dayNumber: 22,
-    dayName: 'Tuesday',
-    formattedDate: '1 Dec 2026',
-    phase: 'revision_final',
-    phaseLabel: 'Final Revision + PYQs',
-    dsaBlockId: 'dsa-6',
-    targets: [
-      {
-        id: 'target-rev-maths-3-5',
-        dateStr: '2026-12-01',
-        subject: 'Mathematics-4',
-        subjectCode: 'MATHS_4',
-        unit: 'Units 3, 4 and 5',
-        title: 'Maths-4 – Units 3, 4 and 5 + formula revision',
-        details: 'Formula flashcards for hypothesis testing, t-test, Chi-square table reading, regression coefficients.',
-        isRevision: true,
-      },
-    ],
-  },
-  {
-    dateStr: '2026-12-02',
-    dayNumber: 23,
-    dayName: 'Wednesday',
-    formattedDate: '2 Dec 2026',
-    phase: 'revision_final',
-    phaseLabel: 'Final Revision + PYQs',
-    dsaBlockId: 'dsa-6',
-    targets: [
-      {
-        id: 'target-rev-cyber-3-5',
-        dateStr: '2026-12-02',
-        subject: 'Cyber Security',
-        subjectCode: 'CYBER_SECURITY',
-        unit: 'Units 3, 4 and 5',
-        title: 'Cyber Security – Units 3, 4 and 5 + PYQs',
-        details: 'Solve last 5 years university questions on RSA math, IT Act 2000 sections, and firewall architectures.',
-        isRevision: true,
-      },
-    ],
-  },
-  {
-    dateStr: '2026-12-03',
-    dayNumber: 24,
-    dayName: 'Thursday',
-    formattedDate: '3 Dec 2026',
-    phase: 'revision_final',
-    phaseLabel: 'Final Revision + PYQs',
-    dsaBlockId: 'dsa-7',
-    targets: [
-      {
-        id: 'target-rev-dstl-3-5',
-        dateStr: '2026-12-03',
-        subject: 'Discrete Structures and Theory of Logic (DSTL)',
-        subjectCode: 'DSTL',
-        unit: 'Units 3, 4 and 5',
-        title: 'DSTL – Units 3, 4 and 5 + PYQs',
-        details: 'Solve university PYQs on Hasse diagrams, Boolean simplification, recurrence relations, and Eulerian graphs.',
-        isRevision: true,
-      },
-    ],
-  },
-  {
-    dateStr: '2026-12-04',
-    dayNumber: 25,
-    dayName: 'Friday',
-    formattedDate: '4 Dec 2026',
-    phase: 'revision_final',
-    phaseLabel: 'Final Revision + PYQs',
-    dsaBlockId: 'dsa-7',
-    targets: [
-      {
-        id: 'target-rev-dsa-3-5',
-        dateStr: '2026-12-04',
-        subject: 'Data Structures and Algorithms (DSA)',
-        subjectCode: 'DSA',
-        unit: 'Units 3, 4 and 5',
-        title: 'DSA (semester) – Units 3, 4 and 5 + algorithm practice',
-        details: 'Practice Dijkstra algorithm trace, Prim and Kruskal MST, AVL rotations, and linked list inversion.',
-        isRevision: true,
-      },
-    ],
-  },
-  {
-    dateStr: '2026-12-05',
-    dayNumber: 26,
-    dayName: 'Saturday',
-    formattedDate: '5 Dec 2026',
-    phase: 'revision_final',
-    phaseLabel: 'Final Revision + PYQs',
-    dsaBlockId: 'dsa-7',
-    targets: [
-      {
-        id: 'target-rev-hv-3-5',
-        dateStr: '2026-12-05',
-        subject: 'Human Values',
-        subjectCode: 'HUMAN_VALUES',
-        unit: 'Units 3, 4 and 5',
-        title: 'Human Values – Units 3, 4 and 5 + short notes',
-        details: 'Review holistic universal order, professional ethics case studies, and rapid answer framing.',
-        isRevision: true,
-      },
-    ],
-  },
-  {
-    dateStr: '2026-12-06',
-    dayNumber: 27,
-    dayName: 'Sunday',
-    formattedDate: '6 Dec 2026',
-    phase: 'revision_final',
-    phaseLabel: 'Final Revision + PYQs',
-    dsaBlockId: 'dsa-7',
-    targets: [
-      {
-        id: 'target-rev-mock-exam',
-        dateStr: '2026-12-06',
-        subject: 'First Exam Subject & Mock PYQ',
+        subject: 'Final Mock & Exam Practice',
         subjectCode: 'MOCK_EXAM',
         unit: 'Mock / PYQ',
-        title: 'Quick revision of the subject whose exam is first; solve a mock/PYQ paper',
-        details: 'Simulate 3-hour exam condition for Paper 1, review mistakes, relax mind, and set stationary ready.',
+        title: 'Grand Final Exam Mock Paper Simulation (Complete Syllabus Done by Nov 30!)',
+        details: 'Solve a full 3-hour mock paper for Paper 1 under timed conditions. Celebrate completing 100% of your mission on time!',
         isRevision: true,
       },
     ],
   },
 ];
-
-// ORIGINAL SCHEDULE (9 Nov – 6 Dec 2026, 28 Days)
-export const ORIGINAL_SCHEDULE_DAYS: DaySchedule[] = [
-  {
-    dateStr: '2026-11-09',
-    dayNumber: 1,
-    dayName: 'Monday',
-    formattedDate: '9 Nov 2026',
-    phase: 'syllabus',
-    phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-1',
-    targets: [
-      {
-        id: 'orig-target-coa-u1',
-        dateStr: '2026-11-09',
-        subject: 'Computer Organization and Architecture (COA)',
-        subjectCode: 'COA',
-        unit: 'Unit 1',
-        title: 'COA – Unit 1',
-        details: 'Functional units, bus structures, instruction codes, computer registers, and basic computer instructions.',
-      },
-      {
-        id: 'orig-target-maths-u1',
-        dateStr: '2026-11-09',
-        subject: 'Mathematics-4',
-        subjectCode: 'MATHS_4',
-        unit: 'Unit 1',
-        title: 'Maths-4 – Unit 1',
-        details: 'Partial Differential Equations, formation of PDE, Lagrange linear equations, first-order non-linear PDE.',
-      },
-    ],
-  },
-  // Map rest similarly...
-  ...SHIFTED_SCHEDULE_DAYS.filter(d => d.dayNumber >= 1).map((d, idx) => ({
-    ...d,
-    dayNumber: idx + 2,
-    targets: d.targets.map(t => ({ ...t, id: `orig-${t.id}` })),
-  })),
-];
-
-// Export aliases for backwards compatibility
-export const SCHEDULE_DAYS = SHIFTED_SCHEDULE_DAYS;
-export const DSA_PRACTICE_BLOCKS = SHIFTED_DSA_BLOCKS;
-
-// Helper to get active days based on mode
-export function getScheduleDays(mode: ScheduleMode = 'shifted'): DaySchedule[] {
-  return mode === 'shifted' ? SHIFTED_SCHEDULE_DAYS : ORIGINAL_SCHEDULE_DAYS;
-}
-
-export function getDSABlocks(mode: ScheduleMode = 'shifted'): DSAPracticeBlock[] {
-  return mode === 'shifted' ? SHIFTED_DSA_BLOCKS : SHIFTED_DSA_BLOCKS;
-}
 
 export const DAILY_CHECKLIST_TEMPLATE = [
   { id: 'check-1', text: 'Finish both semester subject targets listed for the day.' },
-  { id: 'check-2', text: 'Complete the separate DSA practice target.' },
+  { id: 'check-2', text: 'Write down and log your daily DSA practice in the DSA tab.' },
   { id: 'check-3', text: 'Revise the topics studied and mark doubts/weak areas.' },
   { id: 'check-4', text: 'Solve questions or write answers without looking at notes.' },
 ];
 
 export const MOTIVATIONAL_QUOTES = [
-  "Today is Day 1 of your mission. Start strong, stay focused, succeed!",
+  "Target: November 30! Complete syllabus + revision in 21 days.",
   "One Day. Two Targets. One Step Closer to Success.",
   "Consistency beats talent when talent doesn't work hard.",
   "Every unit completed today is a guarantee of confidence in the exam hall.",
   "Small daily disciplines compound into academic mastery.",
   "Focus on the process, and the marks will take care of themselves.",
-  "Do it today so you don't panic on exam eve.",
-  "Discipline is choosing between what you want now and what you want most.",
-  "Stay calm, write clean code, derive clearly, ace the mission!",
+  "By November 30, you will be 100% prepared and fearless.",
+  "Stay disciplined, log your daily practice, ace the mission!",
 ];

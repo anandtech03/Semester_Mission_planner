@@ -6,23 +6,24 @@ import {
   Code2, 
   CheckCheck, 
   RotateCcw,
-  PartyPopper
+  PartyPopper,
+  Plus
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DaySchedule, DSAPracticeBlock } from '../types';
+import { DaySchedule, DSALogEntry } from '../types';
 import { SUBJECT_METAS, MOTIVATIONAL_QUOTES } from '../data/studyPlanData';
 import { formatISTDate } from '../utils/dateUtils';
 
 interface TodayHeroProps {
   todaySchedule: DaySchedule;
-  currentDSABlock: DSAPracticeBlock;
+  todayDSALogs: DSALogEntry[];
   todayStr: string;
   completedTargetIds: string[];
   onToggleTarget: (targetId: string) => void;
   onMarkAllTodayComplete: (dateStr: string) => void;
   onUnmarkAllToday: (dateStr: string) => void;
-  onSelectDate: (dateStr: string) => void;
+  onNavigateToDSA: () => void;
   stats: {
     todayCompletedCount: number;
     todayTotalTargets: number;
@@ -33,13 +34,13 @@ interface TodayHeroProps {
 
 export const TodayHero: React.FC<TodayHeroProps> = ({
   todaySchedule,
-  currentDSABlock,
+  todayDSALogs,
   todayStr,
   completedTargetIds,
   onToggleTarget,
   onMarkAllTodayComplete,
   onUnmarkAllToday,
-  onSelectDate,
+  onNavigateToDSA,
   stats,
 }) => {
   const triggerConfetti = () => {
@@ -75,10 +76,10 @@ export const TodayHero: React.FC<TodayHeroProps> = ({
           <div className="flex flex-wrap items-center gap-2 mb-1.5">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-              TODAY'S MISSION
+              TODAY'S MISSION FOCUS
             </span>
             <span className="text-xs text-slate-400 font-mono">
-              Day {todaySchedule.dayNumber} of 28
+              Day {todaySchedule.dayNumber} of 21
             </span>
             <span className="text-slate-700">·</span>
             <span className="text-xs text-slate-400">
@@ -142,11 +143,11 @@ export const TodayHero: React.FC<TodayHeroProps> = ({
           >
             <div className="flex items-center gap-2.5">
               <PartyPopper className="w-4 h-4 text-emerald-400" />
-              <span><strong>Mission Complete!</strong> You finished both semester targets for today. Keep your DSA practice on track!</span>
+              <span><strong>Mission Complete!</strong> You finished all scheduled targets for today. Complete syllabus target on track for 30 November!</span>
             </div>
             <button
               onClick={triggerConfetti}
-              className="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-[11px] font-semibold transition-colors flex-shrink-0"
+              className="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-[11px] font-semibold transition-colors flex-shrink-0 cursor-pointer"
             >
               Celebrate 🎉
             </button>
@@ -215,25 +216,32 @@ export const TodayHero: React.FC<TodayHeroProps> = ({
         })}
       </div>
 
-      {/* Embedded Clean DSA Focus Bar */}
-      {currentDSABlock && (
-        <div className="mt-4 p-3 rounded-xl bg-slate-900/40 border border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs">
-          <div className="flex items-center gap-2.5">
-            <Code2 className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-            <div>
-              <span className="text-slate-400">Independent DSA Track ({currentDSABlock.dateRangeLabel}): </span>
-              <span className="text-slate-200 font-medium">{currentDSABlock.title}</span>
-            </div>
+      {/* Embedded Clean Today's DSA Status Bar */}
+      <div className="mt-4 p-3 rounded-xl bg-slate-900/40 border border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs">
+        <div className="flex items-center gap-2.5">
+          <Code2 className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+          <div>
+            <span className="text-slate-400">Today's DSA Practice: </span>
+            {todayDSALogs.length > 0 ? (
+              <span className="text-indigo-300 font-medium">
+                {todayDSALogs.map(l => l.topic).join(', ')} ({todayDSALogs.reduce((acc, c) => acc + (c.problemsCount || 1), 0)} problems solved)
+              </span>
+            ) : (
+              <span className="text-slate-400 italic">
+                No DSA practice logged for today yet.
+              </span>
+            )}
           </div>
-
-          <button
-            onClick={() => onSelectDate(todaySchedule.dateStr)}
-            className="text-cyan-400 hover:text-cyan-300 font-medium text-[11px] flex items-center gap-1 flex-shrink-0 cursor-pointer"
-          >
-            <span>View Checklist →</span>
-          </button>
         </div>
-      )}
+
+        <button
+          onClick={onNavigateToDSA}
+          className="text-cyan-400 hover:text-cyan-300 font-medium text-[11px] flex items-center gap-1 flex-shrink-0 cursor-pointer"
+        >
+          <Plus className="w-3 h-3" />
+          <span>{todayDSALogs.length > 0 ? 'Add More in DSA Tab →' : 'Log Today\'s DSA Practice →'}</span>
+        </button>
+      </div>
 
     </section>
   );

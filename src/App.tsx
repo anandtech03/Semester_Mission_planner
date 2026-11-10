@@ -12,6 +12,7 @@ import { RevisionPlanView } from './components/RevisionPlanView';
 import { DailyNotesAndChecklist } from './components/DailyNotesAndChecklist';
 import { ResetConfirmModal } from './components/ResetConfirmModal';
 import { StudyTimerModal } from './components/StudyTimerModal';
+import { SCHEDULE_DAYS } from './data/studyPlanData';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<ViewTab>('dashboard');
@@ -23,23 +24,21 @@ export function App() {
     systemTodayStr,
     simulatedDateStr,
     selectedDateStr,
-    scheduleMode,
     filter,
     completedTargetIds,
-    completedDSATopicIds,
+    dsaLogs,
+    todayDSALogs,
     dailyNotes,
     dailyChecklist,
-    activeScheduleDays,
     todaySchedule,
-    selectedSchedule,
-    currentDSABlock,
     stats,
-    setScheduleMode,
     setSelectedDateStr,
     setSimulatedDateStr,
     setFilter,
     toggleTarget,
-    toggleDSATopic,
+    addDSALog,
+    deleteDSALog,
+    toggleDSALog,
     toggleChecklistItem,
     saveDailyNote,
     markAllTodayComplete,
@@ -60,8 +59,6 @@ export function App() {
         systemTodayStr={systemTodayStr}
         simulatedDateStr={simulatedDateStr}
         onSetSimulatedDate={setSimulatedDateStr}
-        scheduleMode={scheduleMode}
-        onSetScheduleMode={setScheduleMode}
         onOpenResetModal={() => setIsResetModalOpen(true)}
         onOpenTimerModal={() => setIsTimerModalOpen(true)}
         stats={stats}
@@ -79,16 +76,13 @@ export function App() {
             {/* Today's Focus Card */}
             <TodayHero
               todaySchedule={todaySchedule}
-              currentDSABlock={currentDSABlock}
+              todayDSALogs={todayDSALogs}
               todayStr={todayStr}
               completedTargetIds={completedTargetIds}
               onToggleTarget={toggleTarget}
               onMarkAllTodayComplete={markAllTodayComplete}
               onUnmarkAllToday={unmarkAllToday}
-              onSelectDate={(dateStr) => {
-                setSelectedDateStr(dateStr);
-                setActiveTab('daily_targets');
-              }}
+              onNavigateToDSA={() => setActiveTab('dsa_tracker')}
               stats={stats}
             />
 
@@ -98,7 +92,7 @@ export function App() {
               selectedDateStr={selectedDateStr}
               onSelectDate={setSelectedDateStr}
               completedTargetIds={completedTargetIds}
-              activeScheduleDays={activeScheduleDays}
+              activeScheduleDays={SCHEDULE_DAYS}
             />
 
             {/* Daily Targets & Study Notes */}
@@ -111,7 +105,7 @@ export function App() {
                 onToggleTarget={toggleTarget}
                 filter={filter}
                 onFilterChange={setFilter}
-                activeScheduleDays={activeScheduleDays}
+                activeScheduleDays={SCHEDULE_DAYS}
               />
 
               <DailyNotesAndChecklist
@@ -121,7 +115,7 @@ export function App() {
                 onSaveDailyNote={saveDailyNote}
                 dailyChecklist={dailyChecklist}
                 onToggleChecklistItem={toggleChecklistItem}
-                activeScheduleDays={activeScheduleDays}
+                activeScheduleDays={SCHEDULE_DAYS}
               />
             </div>
           </div>
@@ -137,7 +131,7 @@ export function App() {
               selectedDateStr={selectedDateStr}
               onSelectDate={setSelectedDateStr}
               completedTargetIds={completedTargetIds}
-              activeScheduleDays={activeScheduleDays}
+              activeScheduleDays={SCHEDULE_DAYS}
             />
 
             <DailyTargetsList
@@ -148,7 +142,7 @@ export function App() {
               onToggleTarget={toggleTarget}
               filter={filter}
               onFilterChange={setFilter}
-              activeScheduleDays={activeScheduleDays}
+              activeScheduleDays={SCHEDULE_DAYS}
             />
           </div>
         )}
@@ -158,13 +152,13 @@ export function App() {
           <div className="space-y-6 animate-fade-in">
             <TodayHero
               todaySchedule={todaySchedule}
-              currentDSABlock={currentDSABlock}
+              todayDSALogs={todayDSALogs}
               todayStr={todayStr}
               completedTargetIds={completedTargetIds}
               onToggleTarget={toggleTarget}
               onMarkAllTodayComplete={markAllTodayComplete}
               onUnmarkAllToday={unmarkAllToday}
-              onSelectDate={setSelectedDateStr}
+              onNavigateToDSA={() => setActiveTab('dsa_tracker')}
               stats={stats}
             />
 
@@ -176,18 +170,20 @@ export function App() {
               onToggleTarget={toggleTarget}
               filter={filter}
               onFilterChange={setFilter}
-              activeScheduleDays={activeScheduleDays}
+              activeScheduleDays={SCHEDULE_DAYS}
             />
           </div>
         )}
 
-        {/* Independent DSA Roadmap Tab */}
+        {/* Personal DSA Practice Log Tab */}
         {activeTab === 'dsa_tracker' && (
           <div className="space-y-6 animate-fade-in">
             <DSATracker
               todayStr={todayStr}
-              completedDSATopicIds={completedDSATopicIds}
-              onToggleDSATopic={toggleDSATopic}
+              dsaLogs={dsaLogs}
+              onAddDSALog={addDSALog}
+              onDeleteDSALog={deleteDSALog}
+              onToggleDSALog={toggleDSALog}
               stats={stats}
             />
           </div>
@@ -204,7 +200,7 @@ export function App() {
                 setSelectedDateStr(dateStr);
                 setActiveTab('daily_targets');
               }}
-              activeScheduleDays={activeScheduleDays}
+              activeScheduleDays={SCHEDULE_DAYS}
             />
           </div>
         )}
@@ -219,7 +215,7 @@ export function App() {
               onSaveDailyNote={saveDailyNote}
               dailyChecklist={dailyChecklist}
               onToggleChecklistItem={toggleChecklistItem}
-              activeScheduleDays={activeScheduleDays}
+              activeScheduleDays={SCHEDULE_DAYS}
             />
           </div>
         )}
@@ -234,7 +230,7 @@ export function App() {
               DECEMBER EXAM MISSION 2026
             </div>
             <div className="text-[11px] text-slate-500 mt-0.5">
-              One Day. Two Targets. One Step Closer to Success. · Shifted to 10 Nov – 6 Dec 2026
+              Target: 30 November (Syllabus + Revision Complete) · 10 Nov – 30 Nov 2026
             </div>
           </div>
 
@@ -249,7 +245,7 @@ export function App() {
               onClick={() => setActiveTab('dsa_tracker')}
               className="hover:text-slate-300 transition-colors cursor-pointer"
             >
-              DSA
+              Daily DSA Log
             </button>
             <button 
               onClick={() => setActiveTab('revision_plan')}

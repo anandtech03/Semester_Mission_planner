@@ -10,10 +10,9 @@ import {
   Menu, 
   X,
   Compass,
-  FileText,
-  CalendarRange
+  FileText
 } from 'lucide-react';
-import { ViewTab, ScheduleMode } from '../types';
+import { ViewTab } from '../types';
 import { formatISTTime, formatISTDate } from '../utils/dateUtils';
 
 interface HeaderProps {
@@ -23,8 +22,6 @@ interface HeaderProps {
   systemTodayStr: string;
   simulatedDateStr: string | null;
   onSetSimulatedDate: (dateStr: string | null) => void;
-  scheduleMode: ScheduleMode;
-  onSetScheduleMode: (mode: ScheduleMode) => void;
   onOpenResetModal: () => void;
   onOpenTimerModal: () => void;
   stats: {
@@ -42,8 +39,6 @@ export const Header: React.FC<HeaderProps> = ({
   systemTodayStr,
   simulatedDateStr,
   onSetSimulatedDate,
-  scheduleMode,
-  onSetScheduleMode,
   onOpenResetModal,
   onOpenTimerModal,
   stats,
@@ -63,19 +58,18 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'dashboard' as ViewTab, label: 'Overview', icon: Compass },
     { id: 'calendar' as ViewTab, label: 'Live Calendar', icon: CalendarIcon },
     { id: 'daily_targets' as ViewTab, label: 'Targets', icon: CheckCircle2 },
-    { id: 'dsa_tracker' as ViewTab, label: 'DSA Roadmap', icon: Code2 },
-    { id: 'revision_plan' as ViewTab, label: 'Revision', icon: Sparkles },
+    { id: 'dsa_tracker' as ViewTab, label: 'Daily DSA Log', icon: Code2 },
+    { id: 'revision_plan' as ViewTab, label: 'Revision Sprint', icon: Sparkles },
     { id: 'notes' as ViewTab, label: 'Notes', icon: FileText },
   ];
 
   const quickDates = [
     { label: 'Real System Time (Live 10 Nov)', value: null },
-    { label: 'Day 1: 10 Nov (Shifted Start)', value: '2026-11-10' },
+    { label: 'Day 1: 10 Nov (Mission Starts)', value: '2026-11-10' },
     { label: 'Day 7: 16 Nov (Unit 3)', value: '2026-11-16' },
     { label: 'Day 15: 24 Nov (Last Syllabus Day)', value: '2026-11-24' },
-    { label: 'Day 16: 25 Nov (Revision Round 1)', value: '2026-11-25' },
-    { label: 'Day 22: 1 Dec (Final PYQs)', value: '2026-12-01' },
-    { label: 'Day 27: 6 Dec (Mock Exam)', value: '2026-12-06' },
+    { label: 'Day 16: 25 Nov (Revision Starts)', value: '2026-11-25' },
+    { label: 'Day 21: 30 Nov (Mission Complete!)', value: '2026-11-30' },
   ];
 
   return (
@@ -96,35 +90,8 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </div>
 
-          {/* Right: Schedule Mode pill, Date Simulator, Timer */}
+          {/* Right: Date Simulator & Pomodoro trigger */}
           <div className="flex items-center gap-2">
-            
-            {/* Schedule Mode Switcher */}
-            <div className="flex items-center bg-slate-900/60 p-0.5 rounded-md border border-slate-800/80 text-[10px]">
-              <button
-                onClick={() => onSetScheduleMode('shifted')}
-                className={`px-2 py-0.5 rounded transition-all ${
-                  scheduleMode === 'shifted'
-                    ? 'bg-cyan-500/20 text-cyan-300 font-semibold'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-                title="Shifted timetable starting today (10 Nov to 6 Dec, 27 Days)"
-              >
-                Shifted (Starts Today 10 Nov)
-              </button>
-              <button
-                onClick={() => onSetScheduleMode('original')}
-                className={`px-2 py-0.5 rounded transition-all ${
-                  scheduleMode === 'original'
-                    ? 'bg-slate-700 text-white font-semibold'
-                    : 'text-slate-500 hover:text-white'
-                }`}
-                title="Original 28-day plan from PDF (Started 9 Nov)"
-              >
-                Original (9 Nov)
-              </button>
-            </div>
-
             {simulatedDateStr && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">
                 <span>Simulating: {simulatedDateStr}</span>
@@ -194,7 +161,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[1px] flex items-center justify-center shadow-sm">
             <div className="h-full w-full bg-[#080b12] rounded-[7px] flex items-center justify-center">
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-tr from-cyan-400 to-indigo-300 text-xs font-mono">
-                26
+                30
               </span>
             </div>
           </div>
@@ -203,14 +170,12 @@ export const Header: React.FC<HeaderProps> = ({
               <h1 className="font-bold text-sm sm:text-base tracking-wide text-white">
                 DECEMBER EXAM MISSION 2026
               </h1>
-              {scheduleMode === 'shifted' && (
-                <span className="text-[10px] font-medium px-2 py-0.2 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                  Rescheduled (Day 1 = Today)
-                </span>
-              )}
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                Target: 30 Nov Complete
+              </span>
             </div>
             <p className="text-[11px] text-slate-400 font-normal hidden sm:block">
-              One Day. Two Targets. <span className="text-slate-300 font-medium">One Step Closer to Success.</span>
+              One Day. Two Targets. <span className="text-slate-300 font-medium">Syllabus + Revision Complete by Nov 30.</span>
             </p>
           </div>
         </div>

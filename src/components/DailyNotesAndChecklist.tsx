@@ -8,7 +8,7 @@ import {
   BookmarkPlus
 } from 'lucide-react';
 import { DaySchedule } from '../types';
-import { DAILY_CHECKLIST_TEMPLATE, SHIFTED_SCHEDULE_DAYS } from '../data/studyPlanData';
+import { DAILY_CHECKLIST_TEMPLATE, SCHEDULE_DAYS } from '../data/studyPlanData';
 import { formatISTDate } from '../utils/dateUtils';
 
 interface DailyNotesAndChecklistProps {
@@ -28,7 +28,7 @@ export const DailyNotesAndChecklist: React.FC<DailyNotesAndChecklistProps> = ({
   onSaveDailyNote,
   dailyChecklist,
   onToggleChecklistItem,
-  activeScheduleDays = SHIFTED_SCHEDULE_DAYS,
+  activeScheduleDays = SCHEDULE_DAYS,
 }) => {
   const currentNote = dailyNotes[selectedDateStr] || '';
   const [localNote, setLocalNote] = useState<string>(currentNote);
@@ -70,7 +70,7 @@ export const DailyNotesAndChecklist: React.FC<DailyNotesAndChecklistProps> = ({
             onChange={(e) => onSelectDate(e.target.value)}
             className="bg-transparent text-white font-medium focus:outline-none cursor-pointer"
           >
-            {activeScheduleDays.filter(d => d.targets.length > 0).map((day) => (
+            {activeScheduleDays.filter((d: DaySchedule) => d.targets.length > 0).map((day: DaySchedule) => (
               <option key={day.dateStr} value={day.dateStr} className="bg-slate-900 text-white">
                 Day {day.dayNumber} ({day.formattedDate})
               </option>

@@ -1,12 +1,13 @@
 /**
  * Date utility functions strictly adhering to Indian Standard Time (Asia/Kolkata, UTC+5:30)
+ * Target Completion: 30 November 2026 (Syllabus + Complete Revision)
  */
 
 export const IST_TIMEZONE = 'Asia/Kolkata';
 
-// Schedule boundaries
-export const SCHEDULE_START_DATE = '2026-11-09';
-export const SCHEDULE_END_DATE = '2026-12-06';
+// Schedule boundaries: 10 Nov 2026 to 30 Nov 2026 (21 Days Mission)
+export const SCHEDULE_START_DATE = '2026-11-10';
+export const SCHEDULE_END_DATE = '2026-11-30';
 
 /**
  * Returns the current date in YYYY-MM-DD format based on Asia/Kolkata timezone
@@ -24,11 +25,10 @@ export function getISTTodayString(overrideDate?: Date | null): string {
 
 /**
  * Formats a date string (YYYY-MM-DD) into human-readable IST string
- * e.g., "Mon, 9 Nov 2026"
+ * e.g., "Tue, 10 Nov 2026"
  */
 export function formatISTDate(dateStr: string, options?: Intl.DateTimeFormatOptions): string {
   const [year, month, day] = dateStr.split('-').map(Number);
-  // Create UTC date at noon to avoid timezone shift boundaries
   const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
   
   const defaultOpts: Intl.DateTimeFormatOptions = {
@@ -43,7 +43,7 @@ export function formatISTDate(dateStr: string, options?: Intl.DateTimeFormatOpti
 }
 
 /**
- * Formats time in IST (e.g., "10:20:07 PM IST")
+ * Formats time in IST (e.g., "04:26:00 PM IST")
  */
 export function formatISTTime(date: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-IN', {
@@ -77,7 +77,7 @@ export function isDateInFuture(targetDateStr: string, todayStr: string): boolean
 }
 
 /**
- * Calculates days remaining until schedule ends
+ * Calculates days remaining until schedule ends (30 Nov 2026)
  */
 export function calculateDaysRemaining(todayStr: string, endDateStr: string = SCHEDULE_END_DATE): number {
   if (todayStr > endDateStr) return 0;
@@ -100,5 +100,5 @@ export function calculateDaysCompleted(todayStr: string, startDateStr: string = 
   const start = new Date(startDateStr).getTime();
   const today = new Date(todayStr).getTime();
   const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-  return Math.min(28, Math.max(0, diffDays));
+  return Math.min(21, Math.max(0, diffDays));
 }

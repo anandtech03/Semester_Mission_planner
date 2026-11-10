@@ -6,8 +6,8 @@ import {
   BookOpen, 
   Check
 } from 'lucide-react';
-import { FilterStatus, DaySchedule } from '../types';
-import { SHIFTED_SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
+import { FilterStatus, DaySchedule, StudyTarget } from '../types';
+import { SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
 import { formatISTDate, isDateCurrent, isDateInPast } from '../utils/dateUtils';
 
 interface DailyTargetsListProps {
@@ -29,15 +29,15 @@ export const DailyTargetsList: React.FC<DailyTargetsListProps> = ({
   onToggleTarget,
   filter,
   onFilterChange,
-  activeScheduleDays = SHIFTED_SCHEDULE_DAYS,
+  activeScheduleDays = SCHEDULE_DAYS,
 }) => {
   const [selectedSubject, setSelectedSubject] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewScope, setViewScope] = useState<'selected_day' | 'all_days'>('selected_day');
 
-  const daysSource = activeScheduleDays.filter(d => d.targets.length > 0);
+  const daysSource = activeScheduleDays.filter((d: DaySchedule) => d.targets.length > 0);
   const activeDays = viewScope === 'selected_day'
-    ? daysSource.filter(d => d.dateStr === selectedDateStr)
+    ? daysSource.filter((d: DaySchedule) => d.dateStr === selectedDateStr)
     : daysSource;
 
   const subjectsList = [
@@ -158,11 +158,11 @@ export const DailyTargetsList: React.FC<DailyTargetsListProps> = ({
 
       {/* Days & Targets Output */}
       <div className="mt-4 space-y-4">
-        {activeDays.map((day) => {
+        {activeDays.map((day: DaySchedule) => {
           const isToday = isDateCurrent(day.dateStr, todayStr);
           const isPast = isDateInPast(day.dateStr, todayStr);
 
-          const filteredTargets = day.targets.filter((target) => {
+          const filteredTargets = day.targets.filter((target: StudyTarget) => {
             const isCompleted = completedTargetIds.includes(target.id);
             if (filter === 'pending' && isCompleted) return false;
             if (filter === 'completed' && !isCompleted) return false;
@@ -184,7 +184,7 @@ export const DailyTargetsList: React.FC<DailyTargetsListProps> = ({
           }
 
           const totalDayTargets = day.targets.length;
-          const completedDayTargets = day.targets.filter(t => completedTargetIds.includes(t.id)).length;
+          const completedDayTargets = day.targets.filter((t: StudyTarget) => completedTargetIds.includes(t.id)).length;
           const dayPercent = totalDayTargets > 0 ? Math.round((completedDayTargets / totalDayTargets) * 100) : 0;
 
           return (
@@ -225,7 +225,7 @@ export const DailyTargetsList: React.FC<DailyTargetsListProps> = ({
 
               {/* Targets List */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {filteredTargets.map((target) => {
+                {filteredTargets.map((target: StudyTarget) => {
                   const meta = SUBJECT_METAS[target.subjectCode] || SUBJECT_METAS.COA;
                   const isCompleted = completedTargetIds.includes(target.id);
 
