@@ -1,7 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { SCHEDULE_DAYS, DSA_PRACTICE_BLOCKS, DAILY_CHECKLIST_TEMPLATE } from '../data/studyPlanData';
-import { getISTTodayString, isDateInPast, isDateCurrent, isDateInFuture, calculateDaysRemaining, calculateDaysCompleted } from '../utils/dateUtils';
-import { FilterStatus, DaySchedule } from '../types';
+import { 
+  SHIFTED_SCHEDULE_DAYS, 
+  ORIGINAL_SCHEDULE_DAYS, 
+  SHIFTED_DSA_BLOCKS, 
+  DAILY_CHECKLIST_TEMPLATE,
+  getScheduleDays,
+  getDSABlocks
+} from '../data/studyPlanData';
+import { getISTTodayString, calculateDaysRemaining, calculateDaysCompleted } from '../utils/dateUtils';
+import { FilterStatus, DaySchedule, ScheduleMode } from '../types';
 
 const STORAGE_KEYS = {
   COMPLETED_TARGETS: 'december_exam_mission_completed_targets_v1',
@@ -10,12 +17,31 @@ const STORAGE_KEYS = {
   CHECKLIST: 'december_exam_mission_checklist_v1',
   SIMULATED_DATE: 'december_exam_mission_simulated_date_v1',
   ACTIVE_FILTER: 'december_exam_mission_filter_v1',
+  SCHEDULE_MODE: 'december_exam_mission_schedule_mode_v1',
 };
 
 export function useStudyData() {
   // Real system date in IST
   const [systemTodayStr, setSystemTodayStr] = useState<string>(() => getISTTodayString());
   
+  // Schedule Mode: 'shifted' (Starts 10 Nov, default) or 'original' (9 Nov)
+  const [scheduleMode, setScheduleModeState] = useState<ScheduleMode>(() => {
+    try {
+      return (localStorage.getItem(STORAGE_KEYS.SCHEDULE_MODE) as ScheduleMode) || 'shifted';
+    } catch {
+      return 'shifted';
+    }
+  });
+
+  // Active Schedule dataset
+  const activeScheduleDays = useMemo(() => {
+    return getScheduleDays(scheduleMode);
+  }, [scheduleMode]);
+
+  const activeDSABlocks = useMemo(() => {
+    return getDSABlocks(scheduleMode);
+  }, [scheduleMode]);
+
   // Simulated date for testing if user toggles date machine
   const [simulatedDateStr, setSimulatedDateStrState] = useState<string | null>(() => {
     try {
@@ -92,7 +118,7 @@ export function useStudyData() {
         setSystemTodayStr(current);
       }
     };
-    const interval = setInterval(updateTime, 10000); // Check every 10s
+    const interval = setInterval(updateTime, 10000);
     return () => clearInterval(interval);
   }, [systemTodayStr]);
 
@@ -135,6 +161,15 @@ export function useStudyData() {
       console.error(e);
     }
   }, [dailyChecklist]);
+
+  const setScheduleMode = useCallback((mode: ScheduleMode) => {
+    setScheduleModeState(mode);
+    try {
+      localStorage.setItem(STORAGE_KEYS.SCHEDULE_MODE, mode);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   const setFilter = useCallback((newFilter: FilterStatus) => {
     setFilterState(newFilter);
@@ -199,17 +234,15 @@ export function useStudyData() {
   }, []);
 
   const markAllTodayComplete = useCallback((dateStr: string) => {
-    const day = SCHEDULE_DAYS.find(d => d.dateStr === dateStr);
+    const day = activeScheduleDays.find(d => d.dateStr === dateStr);
     if (!day) return;
 
-    // Add all targets for this day
     const dayTargetIds = day.targets.map(t => t.id);
     setCompletedTargetIds(prev => {
       const set = new Set([...prev, ...dayTargetIds]);
       return Array.from(set);
     });
 
-    // Mark daily checklist items complete
     setDailyChecklist(prev => {
       const current = prev[dateStr] || {};
       const updated = { ...current };
@@ -221,14 +254,14 @@ export function useStudyData() {
         [dateStr]: updated,
       };
     });
-  }, []);
+  }, [activeScheduleDays]);
 
   const unmarkAllToday = useCallback((dateStr: string) => {
-    const day = SCHEDULE_DAYS.find(d => d.dateStr === dateStr);
+    const day = activeScheduleDays.find(d => d.dateStr === dateStr);
     if (!day) return;
     const dayTargetIds = new Set(day.targets.map(t => t.id));
     setCompletedTargetIds(prev => prev.filter(id => !dayTargetIds.has(id)));
-  }, []);
+  }, [activeScheduleDays]);
 
   const resetAllData = useCallback(() => {
     setCompletedTargetIds([]);
@@ -249,8 +282,8 @@ export function useStudyData() {
 
   // Compute all targets flat list
   const allTargets = useMemo(() => {
-    return SCHEDULE_DAYS.flatMap(day => day.targets);
-  }, []);
+    return activeScheduleDays.flatMap(day => day.targets);
+  }, [activeScheduleDays]);
 
   // Total targets counts
   const totalSyllabusTargets = allTargets.length;
@@ -265,8 +298,8 @@ export function useStudyData() {
 
   // DSA counts
   const allDSASubtopics = useMemo(() => {
-    return DSA_PRACTICE_BLOCKS.flatMap(b => b.subtopics);
-  }, []);
+    return activeDSABlocks.flatMap(b => b.subtopics);
+  }, [activeDSABlocks]);
   const totalDSATopics = allDSASubtopics.length;
   const completedDSATopicsCount = useMemo(() => {
     const topicIdSet = new Set(allDSASubtopics.map(t => t.id));
@@ -277,27 +310,30 @@ export function useStudyData() {
     ? Math.round((completedDSATopicsCount / totalDSATopics) * 100) 
     : 0;
 
-  // Calendar Days calculation
-  const totalDays = SCHEDULE_DAYS.length; // 28
-  const daysCompleted = calculateDaysCompleted(todayStr);
+  // Schedule timeline (27 days in shifted schedule, Day 1 = 10 Nov)
+  const validDays = activeScheduleDays.filter(d => d.dayNumber >= 1);
+  const totalDays = validDays.length;
+  const startDateStr = validDays[0]?.dateStr || '2026-11-10';
+  const daysCompleted = calculateDaysCompleted(todayStr, startDateStr);
   const daysRemaining = calculateDaysRemaining(todayStr);
 
-  // Overall Combined Progress (weighted 70% semester, 30% DSA)
   const overallProgressPercentage = Math.round(
     (syllabusProgressPercentage * 0.7) + (dsaProgressPercentage * 0.3)
   );
 
   // Today's schedule object
-  const todaySchedule: DaySchedule | undefined = useMemo(() => {
-    return SCHEDULE_DAYS.find(day => day.dateStr === todayStr) || SCHEDULE_DAYS[0];
-  }, [todayStr]);
+  const todaySchedule: DaySchedule = useMemo(() => {
+    const found = activeScheduleDays.find(day => day.dateStr === todayStr);
+    if (found && found.targets.length > 0) return found;
+    // Default to first active day with targets (10 Nov)
+    return validDays[0] || activeScheduleDays[0];
+  }, [activeScheduleDays, todayStr, validDays]);
 
   // Selected date schedule object
   const selectedSchedule: DaySchedule = useMemo(() => {
-    return SCHEDULE_DAYS.find(day => day.dateStr === selectedDateStr) || todaySchedule;
-  }, [selectedDateStr, todaySchedule]);
+    return activeScheduleDays.find(day => day.dateStr === selectedDateStr) || todaySchedule;
+  }, [activeScheduleDays, selectedDateStr, todaySchedule]);
 
-  // Today targets completion rate
   const todayTargets = todaySchedule?.targets || [];
   const todayCompletedCount = todayTargets.filter(t => completedTargetIds.includes(t.id)).length;
   const isTodayAllCompleted = todayTargets.length > 0 && todayCompletedCount === todayTargets.length;
@@ -305,23 +341,24 @@ export function useStudyData() {
     ? Math.round((todayCompletedCount / todayTargets.length) * 100) 
     : 0;
 
-  // Current active DSA block for today
   const currentDSABlock = useMemo(() => {
-    return DSA_PRACTICE_BLOCKS.find(block => todayStr >= block.startDate && todayStr <= block.endDate)
-      || DSA_PRACTICE_BLOCKS[0];
-  }, [todayStr]);
+    return activeDSABlocks.find(block => todayStr >= block.startDate && todayStr <= block.endDate)
+      || activeDSABlocks[0];
+  }, [activeDSABlocks, todayStr]);
 
   return {
     todayStr,
     systemTodayStr,
     simulatedDateStr,
     selectedDateStr,
+    scheduleMode,
     filter,
     completedTargetIds,
     completedDSATopicIds,
     dailyNotes,
     dailyChecklist,
     allTargets,
+    activeScheduleDays,
     todaySchedule,
     selectedSchedule,
     currentDSABlock,
@@ -342,6 +379,7 @@ export function useStudyData() {
       isTodayAllCompleted,
     },
     // Actions
+    setScheduleMode,
     setSelectedDateStr,
     setSimulatedDateStr,
     setFilter,

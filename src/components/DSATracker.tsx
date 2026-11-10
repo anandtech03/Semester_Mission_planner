@@ -6,7 +6,8 @@ import {
   Flame, 
   CheckCircle2
 } from 'lucide-react';
-import { DSA_PRACTICE_BLOCKS } from '../data/studyPlanData';
+import { DSAPracticeBlock } from '../types';
+import { SHIFTED_DSA_BLOCKS } from '../data/studyPlanData';
 
 interface DSATrackerProps {
   todayStr: string;
@@ -17,6 +18,7 @@ interface DSATrackerProps {
     completedDSATopicsCount: number;
     dsaProgressPercentage: number;
   };
+  blocks?: DSAPracticeBlock[];
 }
 
 export const DSATracker: React.FC<DSATrackerProps> = ({
@@ -24,6 +26,7 @@ export const DSATracker: React.FC<DSATrackerProps> = ({
   completedDSATopicIds,
   onToggleDSATopic,
   stats,
+  blocks = SHIFTED_DSA_BLOCKS,
 }) => {
   return (
     <section className="w-full glass-panel p-5 sm:p-6 rounded-2xl border border-slate-800/80 shadow-xl">
@@ -49,7 +52,7 @@ export const DSATracker: React.FC<DSATrackerProps> = ({
 
       {/* 7 Clean Roadmap Cards */}
       <div className="mt-5 space-y-3.5">
-        {DSA_PRACTICE_BLOCKS.map((block, idx) => {
+        {blocks.map((block: DSAPracticeBlock, idx: number) => {
           const isActive = todayStr >= block.startDate && todayStr <= block.endDate;
           const blockTopicIds = block.subtopics.map(s => s.id);
           const blockCompletedCount = blockTopicIds.filter(id => completedDSATopicIds.includes(id)).length;

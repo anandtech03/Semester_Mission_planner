@@ -71,3 +71,5 @@ export interface DayStatus {
 
 export type FilterStatus = 'all' | 'pending' | 'completed';
 export type ViewTab = 'dashboard' | 'calendar' | 'daily_targets' | 'dsa_tracker' | 'revision_plan' | 'notes';
+export type ScheduleMode = 'shifted' | 'original';
+

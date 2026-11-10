@@ -3,7 +3,8 @@ import {
   Check, 
   HelpCircle
 } from 'lucide-react';
-import { SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
+import { DaySchedule } from '../types';
+import { SHIFTED_SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
 import { isDateCurrent } from '../utils/dateUtils';
 
 interface RevisionPlanViewProps {
@@ -11,15 +12,17 @@ interface RevisionPlanViewProps {
   completedTargetIds: string[];
   onToggleTarget: (targetId: string) => void;
   onSelectDate: (dateStr: string) => void;
+  activeScheduleDays?: DaySchedule[];
 }
 
 export const RevisionPlanView: React.FC<RevisionPlanViewProps> = ({
   todayStr,
   completedTargetIds,
   onToggleTarget,
+  activeScheduleDays = SHIFTED_SCHEDULE_DAYS,
 }) => {
-  const round1Days = SCHEDULE_DAYS.filter(d => d.phase === 'revision_round_1');
-  const round2Days = SCHEDULE_DAYS.filter(d => d.phase === 'revision_final');
+  const round1Days = activeScheduleDays.filter(d => d.phase === 'revision_round_1');
+  const round2Days = activeScheduleDays.filter(d => d.phase === 'revision_final');
 
   const round1Total = round1Days.flatMap(d => d.targets).length;
   const round1Done = round1Days.flatMap(d => d.targets).filter(t => completedTargetIds.includes(t.id)).length;

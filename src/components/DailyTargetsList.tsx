@@ -6,8 +6,8 @@ import {
   BookOpen, 
   Check
 } from 'lucide-react';
-import { FilterStatus } from '../types';
-import { SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
+import { FilterStatus, DaySchedule } from '../types';
+import { SHIFTED_SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
 import { formatISTDate, isDateCurrent, isDateInPast } from '../utils/dateUtils';
 
 interface DailyTargetsListProps {
@@ -18,6 +18,7 @@ interface DailyTargetsListProps {
   onToggleTarget: (targetId: string) => void;
   filter: FilterStatus;
   onFilterChange: (filter: FilterStatus) => void;
+  activeScheduleDays?: DaySchedule[];
 }
 
 export const DailyTargetsList: React.FC<DailyTargetsListProps> = ({
@@ -28,14 +29,16 @@ export const DailyTargetsList: React.FC<DailyTargetsListProps> = ({
   onToggleTarget,
   filter,
   onFilterChange,
+  activeScheduleDays = SHIFTED_SCHEDULE_DAYS,
 }) => {
   const [selectedSubject, setSelectedSubject] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewScope, setViewScope] = useState<'selected_day' | 'all_days'>('selected_day');
 
+  const daysSource = activeScheduleDays.filter(d => d.targets.length > 0);
   const activeDays = viewScope === 'selected_day'
-    ? SCHEDULE_DAYS.filter(d => d.dateStr === selectedDateStr)
-    : SCHEDULE_DAYS;
+    ? daysSource.filter(d => d.dateStr === selectedDateStr)
+    : daysSource;
 
   const subjectsList = [
     { code: 'ALL', label: 'All Subjects' },

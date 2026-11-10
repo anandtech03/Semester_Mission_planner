@@ -7,7 +7,8 @@ import {
   CheckCircle2,
   BookmarkPlus
 } from 'lucide-react';
-import { DAILY_CHECKLIST_TEMPLATE, SCHEDULE_DAYS } from '../data/studyPlanData';
+import { DaySchedule } from '../types';
+import { DAILY_CHECKLIST_TEMPLATE, SHIFTED_SCHEDULE_DAYS } from '../data/studyPlanData';
 import { formatISTDate } from '../utils/dateUtils';
 
 interface DailyNotesAndChecklistProps {
@@ -17,6 +18,7 @@ interface DailyNotesAndChecklistProps {
   onSaveDailyNote: (dateStr: string, note: string) => void;
   dailyChecklist: Record<string, Record<string, boolean>>;
   onToggleChecklistItem: (dateStr: string, checkId: string) => void;
+  activeScheduleDays?: DaySchedule[];
 }
 
 export const DailyNotesAndChecklist: React.FC<DailyNotesAndChecklistProps> = ({
@@ -26,6 +28,7 @@ export const DailyNotesAndChecklist: React.FC<DailyNotesAndChecklistProps> = ({
   onSaveDailyNote,
   dailyChecklist,
   onToggleChecklistItem,
+  activeScheduleDays = SHIFTED_SCHEDULE_DAYS,
 }) => {
   const currentNote = dailyNotes[selectedDateStr] || '';
   const [localNote, setLocalNote] = useState<string>(currentNote);
@@ -67,7 +70,7 @@ export const DailyNotesAndChecklist: React.FC<DailyNotesAndChecklistProps> = ({
             onChange={(e) => onSelectDate(e.target.value)}
             className="bg-transparent text-white font-medium focus:outline-none cursor-pointer"
           >
-            {SCHEDULE_DAYS.map((day) => (
+            {activeScheduleDays.filter(d => d.targets.length > 0).map((day) => (
               <option key={day.dateStr} value={day.dateStr} className="bg-slate-900 text-white">
                 Day {day.dayNumber} ({day.formattedDate})
               </option>

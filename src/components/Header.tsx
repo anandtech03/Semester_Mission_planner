@@ -3,7 +3,6 @@ import {
   Calendar as CalendarIcon, 
   Clock, 
   CheckCircle2, 
-  BookOpen, 
   Code2, 
   Sparkles, 
   RotateCcw, 
@@ -11,9 +10,10 @@ import {
   Menu, 
   X,
   Compass,
-  FileText
+  FileText,
+  CalendarRange
 } from 'lucide-react';
-import { ViewTab } from '../types';
+import { ViewTab, ScheduleMode } from '../types';
 import { formatISTTime, formatISTDate } from '../utils/dateUtils';
 
 interface HeaderProps {
@@ -23,6 +23,8 @@ interface HeaderProps {
   systemTodayStr: string;
   simulatedDateStr: string | null;
   onSetSimulatedDate: (dateStr: string | null) => void;
+  scheduleMode: ScheduleMode;
+  onSetScheduleMode: (mode: ScheduleMode) => void;
   onOpenResetModal: () => void;
   onOpenTimerModal: () => void;
   stats: {
@@ -40,6 +42,8 @@ export const Header: React.FC<HeaderProps> = ({
   systemTodayStr,
   simulatedDateStr,
   onSetSimulatedDate,
+  scheduleMode,
+  onSetScheduleMode,
   onOpenResetModal,
   onOpenTimerModal,
   stats,
@@ -65,13 +69,13 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   const quickDates = [
-    { label: 'Real System Time (Live)', value: null },
-    { label: 'Day 1: 9 Nov (Plan Starts)', value: '2026-11-09' },
-    { label: 'Day 7: 15 Nov (Unit 3)', value: '2026-11-15' },
-    { label: 'Day 15: 23 Nov (Last Syllabus Day)', value: '2026-11-23' },
-    { label: 'Day 16: 24 Nov (Revision Round 1)', value: '2026-11-24' },
-    { label: 'Day 23: 1 Dec (Final PYQs)', value: '2026-12-01' },
-    { label: 'Day 28: 6 Dec (Mock Exam)', value: '2026-12-06' },
+    { label: 'Real System Time (Live 10 Nov)', value: null },
+    { label: 'Day 1: 10 Nov (Shifted Start)', value: '2026-11-10' },
+    { label: 'Day 7: 16 Nov (Unit 3)', value: '2026-11-16' },
+    { label: 'Day 15: 24 Nov (Last Syllabus Day)', value: '2026-11-24' },
+    { label: 'Day 16: 25 Nov (Revision Round 1)', value: '2026-11-25' },
+    { label: 'Day 22: 1 Dec (Final PYQs)', value: '2026-12-01' },
+    { label: 'Day 27: 6 Dec (Mock Exam)', value: '2026-12-06' },
   ];
 
   return (
@@ -92,8 +96,35 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </div>
 
-          {/* Right: Date Simulator & Pomodoro trigger */}
+          {/* Right: Schedule Mode pill, Date Simulator, Timer */}
           <div className="flex items-center gap-2">
+            
+            {/* Schedule Mode Switcher */}
+            <div className="flex items-center bg-slate-900/60 p-0.5 rounded-md border border-slate-800/80 text-[10px]">
+              <button
+                onClick={() => onSetScheduleMode('shifted')}
+                className={`px-2 py-0.5 rounded transition-all ${
+                  scheduleMode === 'shifted'
+                    ? 'bg-cyan-500/20 text-cyan-300 font-semibold'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+                title="Shifted timetable starting today (10 Nov to 6 Dec, 27 Days)"
+              >
+                Shifted (Starts Today 10 Nov)
+              </button>
+              <button
+                onClick={() => onSetScheduleMode('original')}
+                className={`px-2 py-0.5 rounded transition-all ${
+                  scheduleMode === 'original'
+                    ? 'bg-slate-700 text-white font-semibold'
+                    : 'text-slate-500 hover:text-white'
+                }`}
+                title="Original 28-day plan from PDF (Started 9 Nov)"
+              >
+                Original (9 Nov)
+              </button>
+            </div>
+
             {simulatedDateStr && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">
                 <span>Simulating: {simulatedDateStr}</span>
@@ -109,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative">
               <button
                 onClick={() => setShowTimeTravelMenu(!showTimeTravelMenu)}
-                className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-slate-200 transition-colors px-2 py-0.5 rounded-md border border-slate-800/80 bg-slate-900/40"
+                className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-slate-200 transition-colors px-2 py-0.5 rounded-md border border-slate-800/80 bg-slate-900/40 cursor-pointer"
               >
                 <Clock className="w-3 h-3 text-slate-400" />
                 <span>Date Machine</span>
@@ -129,7 +160,7 @@ export const Header: React.FC<HeaderProps> = ({
                           onSetSimulatedDate(item.value);
                           setShowTimeTravelMenu(false);
                         }}
-                        className={`w-full text-left px-2 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between ${
+                        className={`w-full text-left px-2 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between cursor-pointer ${
                           isSelected 
                             ? 'bg-cyan-500/15 text-cyan-300 font-medium' 
                             : 'text-slate-300 hover:bg-slate-800/60'
@@ -146,7 +177,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={onOpenTimerModal}
-              className="flex items-center gap-1.5 text-[11px] text-slate-300 hover:text-white transition-colors px-2 py-0.5 rounded-md border border-slate-800/80 bg-slate-900/40"
+              className="flex items-center gap-1.5 text-[11px] text-slate-300 hover:text-white transition-colors px-2 py-0.5 rounded-md border border-slate-800/80 bg-slate-900/40 cursor-pointer"
             >
               <Timer className="w-3 h-3 text-cyan-400" />
               <span>Timer</span>
@@ -172,6 +203,11 @@ export const Header: React.FC<HeaderProps> = ({
               <h1 className="font-bold text-sm sm:text-base tracking-wide text-white">
                 DECEMBER EXAM MISSION 2026
               </h1>
+              {scheduleMode === 'shifted' && (
+                <span className="text-[10px] font-medium px-2 py-0.2 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                  Rescheduled (Day 1 = Today)
+                </span>
+              )}
             </div>
             <p className="text-[11px] text-slate-400 font-normal hidden sm:block">
               One Day. Two Targets. <span className="text-slate-300 font-medium">One Step Closer to Success.</span>
@@ -188,7 +224,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                   isActive
                     ? 'bg-slate-800 text-white shadow-sm border border-slate-700/80'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/30 border border-transparent'
@@ -216,7 +252,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onOpenResetModal}
-            className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg border border-slate-800 transition-colors"
+            className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg border border-slate-800 transition-colors cursor-pointer"
             title="Reset All Progress"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -225,7 +261,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Mobile hamburger menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-1.5 text-slate-300 hover:text-white rounded-lg bg-slate-900 border border-slate-800"
+            className="lg:hidden p-1.5 text-slate-300 hover:text-white rounded-lg bg-slate-900 border border-slate-800 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
@@ -247,7 +283,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setActiveTab(item.id);
                     setMobileMenuOpen(false);
                   }}
-                  className={`flex items-center gap-2 p-2 rounded-lg text-xs font-medium text-left transition-colors ${
+                  className={`flex items-center gap-2 p-2 rounded-lg text-xs font-medium text-left transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-slate-800 text-white border border-slate-700'
                       : 'text-slate-400 bg-slate-900/40 border border-slate-800/70'

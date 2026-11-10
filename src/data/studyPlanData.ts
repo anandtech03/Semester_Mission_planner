@@ -1,4 +1,4 @@
-import { SubjectMeta, DaySchedule, DSAPracticeBlock } from '../types';
+import { SubjectMeta, DaySchedule, DSAPracticeBlock, ScheduleMode } from '../types';
 
 export const SUBJECT_METAS: Record<string, SubjectMeta> = {
   COA: {
@@ -101,12 +101,13 @@ export const SUBJECT_METAS: Record<string, SubjectMeta> = {
   },
 };
 
-export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
+// DSA Practice Roadmap for Shifted Schedule (Starts 10 Nov)
+export const SHIFTED_DSA_BLOCKS: DSAPracticeBlock[] = [
   {
     id: 'dsa-1',
-    startDate: '2026-11-09',
-    endDate: '2026-11-12',
-    dateRangeLabel: '9–12 Nov',
+    startDate: '2026-11-10',
+    endDate: '2026-11-13',
+    dateRangeLabel: '10–13 Nov',
     title: 'Sorting: Bubble Sort + Selection Sort',
     description: 'Master quadratic sorting algorithms with thorough intuition, step-by-step tracing, and optimized implementation.',
     subtopics: [
@@ -118,9 +119,9 @@ export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
   },
   {
     id: 'dsa-2',
-    startDate: '2026-11-13',
-    endDate: '2026-11-16',
-    dateRangeLabel: '13–16 Nov',
+    startDate: '2026-11-14',
+    endDate: '2026-11-17',
+    dateRangeLabel: '14–17 Nov',
     title: 'Insertion Sort + Merge Sort',
     description: 'Transition from basic insertion logic to divide-and-conquer logarithmic merge sort.',
     subtopics: [
@@ -132,9 +133,9 @@ export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
   },
   {
     id: 'dsa-3',
-    startDate: '2026-11-17',
-    endDate: '2026-11-20',
-    dateRangeLabel: '17–20 Nov',
+    startDate: '2026-11-18',
+    endDate: '2026-11-21',
+    dateRangeLabel: '18–21 Nov',
     title: 'Quick Sort (Partition Logic, Dry Run, Code)',
     description: 'In-depth mastery of Lomuto/Hoare partition schemes, pivot picking, and recursive sorting.',
     subtopics: [
@@ -146,9 +147,9 @@ export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
   },
   {
     id: 'dsa-4',
-    startDate: '2026-11-21',
-    endDate: '2026-11-24',
-    dateRangeLabel: '21–24 Nov',
+    startDate: '2026-11-22',
+    endDate: '2026-11-25',
+    dateRangeLabel: '22–25 Nov',
     title: 'Sorting Revision + Searching',
     description: 'Comprehensive review of all 5 sorting algorithms and rigorous practice of Linear & Binary Search variants.',
     subtopics: [
@@ -160,9 +161,9 @@ export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
   },
   {
     id: 'dsa-5',
-    startDate: '2026-11-25',
-    endDate: '2026-11-28',
-    dateRangeLabel: '25–28 Nov',
+    startDate: '2026-11-26',
+    endDate: '2026-11-29',
+    dateRangeLabel: '26–29 Nov',
     title: 'Recursion + Linked List Basics and Implementation',
     description: 'Strengthen recursion mental models and build Singly & Doubly Linked Lists from scratch.',
     subtopics: [
@@ -174,9 +175,9 @@ export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
   },
   {
     id: 'dsa-6',
-    startDate: '2026-11-29',
+    startDate: '2026-11-30',
     endDate: '2026-12-02',
-    dateRangeLabel: '29 Nov – 2 Dec',
+    dateRangeLabel: '30 Nov – 2 Dec',
     title: 'Stack + Queue (Operations and Implementation)',
     description: 'Implement LIFO and FIFO structures using arrays & linked lists, and solve classic interview problems.',
     subtopics: [
@@ -202,20 +203,35 @@ export const DSA_PRACTICE_BLOCKS: DSAPracticeBlock[] = [
   },
 ];
 
-export const SCHEDULE_DAYS: DaySchedule[] = [
-  // PHASE 1: Daily Subject Targets (9 Nov – 23 Nov)
+// SHIFTED SCHEDULE: 10 November to 6 December 2026 (27 Days)
+// With 9 Nov represented as Day 0 (Shifted / Rest Day) for full calendar visibility
+export const SHIFTED_SCHEDULE_DAYS: DaySchedule[] = [
+  // Day 0: 9 Nov (Shifted day)
   {
     dateStr: '2026-11-09',
-    dayNumber: 1,
+    dayNumber: 0,
     dayName: 'Monday',
     formattedDate: '9 Nov 2026',
+    phase: 'syllabus',
+    phaseLabel: 'Shifted Day',
+    dsaBlockId: 'dsa-1',
+    targets: [],
+  },
+
+  // PHASE 1: Full Syllabus Coverage (10 Nov – 24 Nov, 15 Days)
+  // Day 1: Starts TODAY (10 Nov)
+  {
+    dateStr: '2026-11-10',
+    dayNumber: 1,
+    dayName: 'Tuesday',
+    formattedDate: '10 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: '2026-11-09-target-1',
-        dateStr: '2026-11-09',
+        id: 'target-coa-u1',
+        dateStr: '2026-11-10',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
         unit: 'Unit 1',
@@ -223,8 +239,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Functional units, bus structures, instruction codes, computer registers, and basic computer instructions.',
       },
       {
-        id: '2026-11-09-target-2',
-        dateStr: '2026-11-09',
+        id: 'target-maths-u1',
+        dateStr: '2026-11-10',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
         unit: 'Unit 1',
@@ -234,17 +250,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-10',
+    dateStr: '2026-11-11',
     dayNumber: 2,
-    dayName: 'Tuesday',
-    formattedDate: '10 Nov 2026',
+    dayName: 'Wednesday',
+    formattedDate: '11 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: '2026-11-10-target-1',
-        dateStr: '2026-11-10',
+        id: 'target-cyber-u1',
+        dateStr: '2026-11-11',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
         unit: 'Unit 1',
@@ -252,8 +268,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Introduction to information systems, cyber security principles, security attacks, vulnerabilities, and threats.',
       },
       {
-        id: '2026-11-10-target-2',
-        dateStr: '2026-11-10',
+        id: 'target-dstl-u1',
+        dateStr: '2026-11-11',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
         unit: 'Unit 1',
@@ -263,37 +279,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-11',
-    dayNumber: 3,
-    dayName: 'Wednesday',
-    formattedDate: '11 Nov 2026',
-    phase: 'syllabus',
-    phaseLabel: 'Syllabus Coverage',
-    dsaBlockId: 'dsa-1',
-    targets: [
-      {
-        id: '2026-11-11-target-1',
-        dateStr: '2026-11-11',
-        subject: 'Data Structures and Algorithms (DSA)',
-        subjectCode: 'DSA',
-        unit: 'Unit 1',
-        title: 'DSA (semester) – Unit 1',
-        details: 'Introduction to data structures, asymptotic notations, time-space complexity, arrays, and recursion.',
-      },
-      {
-        id: '2026-11-11-target-2',
-        dateStr: '2026-11-11',
-        subject: 'Human Values',
-        subjectCode: 'HUMAL_VALUES' as any,
-        unit: 'Unit 1',
-        title: 'Human Values – Unit 1',
-        details: 'Course introduction, need, basic guidelines, continuous happiness and prosperity, self-exploration.',
-      },
-    ],
-  },
-  {
     dateStr: '2026-11-12',
-    dayNumber: 4,
+    dayNumber: 3,
     dayName: 'Thursday',
     formattedDate: '12 Nov 2026',
     phase: 'syllabus',
@@ -301,8 +288,37 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-1',
     targets: [
       {
-        id: '2026-11-12-target-1',
+        id: 'target-dsa-u1',
         dateStr: '2026-11-12',
+        subject: 'Data Structures and Algorithms (DSA)',
+        subjectCode: 'DSA',
+        unit: 'Unit 1',
+        title: 'DSA (semester) – Unit 1',
+        details: 'Introduction to data structures, asymptotic notations, time-space complexity, arrays, and recursion.',
+      },
+      {
+        id: 'target-hv-u1',
+        dateStr: '2026-11-12',
+        subject: 'Human Values',
+        subjectCode: 'HUMAN_VALUES',
+        unit: 'Unit 1',
+        title: 'Human Values – Unit 1',
+        details: 'Course introduction, need, basic guidelines, continuous happiness and prosperity, self-exploration.',
+      },
+    ],
+  },
+  {
+    dateStr: '2026-11-13',
+    dayNumber: 4,
+    dayName: 'Friday',
+    formattedDate: '13 Nov 2026',
+    phase: 'syllabus',
+    phaseLabel: 'Syllabus Coverage',
+    dsaBlockId: 'dsa-1',
+    targets: [
+      {
+        id: 'target-coa-u2',
+        dateStr: '2026-11-13',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
         unit: 'Unit 2',
@@ -310,8 +326,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Central Processing Unit: general register organization, stack organization, addressing modes, instruction formats.',
       },
       {
-        id: '2026-11-12-target-2',
-        dateStr: '2026-11-12',
+        id: 'target-maths-u2',
+        dateStr: '2026-11-13',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
         unit: 'Unit 2',
@@ -321,17 +337,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-13',
+    dateStr: '2026-11-14',
     dayNumber: 5,
-    dayName: 'Friday',
-    formattedDate: '13 Nov 2026',
+    dayName: 'Saturday',
+    formattedDate: '14 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: '2026-11-13-target-1',
-        dateStr: '2026-11-13',
+        id: 'target-cyber-u2',
+        dateStr: '2026-11-14',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
         unit: 'Unit 2',
@@ -339,8 +355,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Application security, email security, web application vulnerabilities, SQL injection, cross-site scripting (XSS).',
       },
       {
-        id: '2026-11-13-target-2',
-        dateStr: '2026-11-13',
+        id: 'target-dstl-u2',
+        dateStr: '2026-11-14',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
         unit: 'Unit 2',
@@ -350,17 +366,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-14',
+    dateStr: '2026-11-15',
     dayNumber: 6,
-    dayName: 'Saturday',
-    formattedDate: '14 Nov 2026',
+    dayName: 'Sunday',
+    formattedDate: '15 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: '2026-11-14-target-1',
-        dateStr: '2026-11-14',
+        id: 'target-dsa-u2',
+        dateStr: '2026-11-15',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
         unit: 'Unit 2',
@@ -368,8 +384,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Stacks and Queues: representation, push/pop/enqueue/dequeue operations, circular queue, priority queue, evaluation of postfix.',
       },
       {
-        id: '2026-11-14-target-2',
-        dateStr: '2026-11-14',
+        id: 'target-hv-u2',
+        dateStr: '2026-11-15',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
         unit: 'Unit 2',
@@ -379,17 +395,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-15',
+    dateStr: '2026-11-16',
     dayNumber: 7,
-    dayName: 'Sunday',
-    formattedDate: '15 Nov 2026',
+    dayName: 'Monday',
+    formattedDate: '16 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: '2026-11-15-target-1',
-        dateStr: '2026-11-15',
+        id: 'target-coa-u3',
+        dateStr: '2026-11-16',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
         unit: 'Unit 3',
@@ -397,8 +413,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Computer Arithmetic: addition and subtraction, multiplication algorithms (Booth algorithm), division algorithms.',
       },
       {
-        id: '2026-11-15-target-2',
-        dateStr: '2026-11-15',
+        id: 'target-maths-u3',
+        dateStr: '2026-11-16',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
         unit: 'Unit 3',
@@ -408,17 +424,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-16',
+    dateStr: '2026-11-17',
     dayNumber: 8,
-    dayName: 'Monday',
-    formattedDate: '16 Nov 2026',
+    dayName: 'Tuesday',
+    formattedDate: '17 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-2',
     targets: [
       {
-        id: '2026-11-16-target-1',
-        dateStr: '2026-11-16',
+        id: 'target-cyber-u3',
+        dateStr: '2026-11-17',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
         unit: 'Unit 3',
@@ -426,8 +442,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Cryptography and network security, symmetric and asymmetric encryption, DES, AES, RSA, digital signatures.',
       },
       {
-        id: '2026-11-16-target-2',
-        dateStr: '2026-11-16',
+        id: 'target-dstl-u3',
+        dateStr: '2026-11-17',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
         unit: 'Unit 3',
@@ -437,17 +453,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-17',
+    dateStr: '2026-11-18',
     dayNumber: 9,
-    dayName: 'Tuesday',
-    formattedDate: '17 Nov 2026',
+    dayName: 'Wednesday',
+    formattedDate: '18 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: '2026-11-17-target-1',
-        dateStr: '2026-11-17',
+        id: 'target-dsa-u3',
+        dateStr: '2026-11-18',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
         unit: 'Unit 3',
@@ -455,8 +471,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Linked Lists: Singly linked list, doubly linked list, circular linked list, polynomial representation and addition.',
       },
       {
-        id: '2026-11-17-target-2',
-        dateStr: '2026-11-17',
+        id: 'target-hv-u3',
+        dateStr: '2026-11-18',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
         unit: 'Unit 3',
@@ -466,17 +482,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-18',
+    dateStr: '2026-11-19',
     dayNumber: 10,
-    dayName: 'Wednesday',
-    formattedDate: '18 Nov 2026',
+    dayName: 'Thursday',
+    formattedDate: '19 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: '2026-11-18-target-1',
-        dateStr: '2026-11-18',
+        id: 'target-coa-u4',
+        dateStr: '2026-11-19',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
         unit: 'Unit 4',
@@ -484,8 +500,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Input-Output Organization: peripheral devices, I/O interface, asynchronous data transfer, modes of transfer, DMA controller.',
       },
       {
-        id: '2026-11-18-target-2',
-        dateStr: '2026-11-18',
+        id: 'target-maths-u4',
+        dateStr: '2026-11-19',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
         unit: 'Unit 4',
@@ -495,17 +511,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-19',
+    dateStr: '2026-11-20',
     dayNumber: 11,
-    dayName: 'Thursday',
-    formattedDate: '19 Nov 2026',
+    dayName: 'Friday',
+    formattedDate: '20 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: '2026-11-19-target-1',
-        dateStr: '2026-11-19',
+        id: 'target-cyber-u4',
+        dateStr: '2026-11-20',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
         unit: 'Unit 4',
@@ -513,8 +529,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Security policies, firewalls, IDS/IPS, cyber forensics, incident response, digital evidence collection.',
       },
       {
-        id: '2026-11-19-target-2',
-        dateStr: '2026-11-19',
+        id: 'target-dstl-u4',
+        dateStr: '2026-11-20',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
         unit: 'Unit 4',
@@ -524,17 +540,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-20',
+    dateStr: '2026-11-21',
     dayNumber: 12,
-    dayName: 'Friday',
-    formattedDate: '20 Nov 2026',
+    dayName: 'Saturday',
+    formattedDate: '21 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-3',
     targets: [
       {
-        id: '2026-11-20-target-1',
-        dateStr: '2026-11-20',
+        id: 'target-dsa-u4',
+        dateStr: '2026-11-21',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
         unit: 'Unit 4',
@@ -542,8 +558,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Trees: binary tree, BST, tree traversals, AVL trees, insertion and balancing rotations, B-trees basics.',
       },
       {
-        id: '2026-11-20-target-2',
-        dateStr: '2026-11-20',
+        id: 'target-hv-u4',
+        dateStr: '2026-11-21',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
         unit: 'Unit 4',
@@ -553,17 +569,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-21',
+    dateStr: '2026-11-22',
     dayNumber: 13,
-    dayName: 'Saturday',
-    formattedDate: '21 Nov 2026',
+    dayName: 'Sunday',
+    formattedDate: '22 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-4',
     targets: [
       {
-        id: '2026-11-21-target-1',
-        dateStr: '2026-11-21',
+        id: 'target-coa-u5',
+        dateStr: '2026-11-22',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
         unit: 'Unit 5',
@@ -571,8 +587,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Memory Organization: memory hierarchy, main memory, auxiliary memory, associative memory, cache memory (mapping techniques).',
       },
       {
-        id: '2026-11-21-target-2',
-        dateStr: '2026-11-21',
+        id: 'target-maths-u5',
+        dateStr: '2026-11-22',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
         unit: 'Unit 5',
@@ -582,17 +598,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-22',
+    dateStr: '2026-11-23',
     dayNumber: 14,
-    dayName: 'Sunday',
-    formattedDate: '22 Nov 2026',
+    dayName: 'Monday',
+    formattedDate: '23 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-4',
     targets: [
       {
-        id: '2026-11-22-target-1',
-        dateStr: '2026-11-22',
+        id: 'target-cyber-u5',
+        dateStr: '2026-11-23',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
         unit: 'Unit 5',
@@ -600,8 +616,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Cyber laws and IT Act 2000, cyber crimes, intellectual property rights, privacy issues, case studies.',
       },
       {
-        id: '2026-11-22-target-2',
-        dateStr: '2026-11-22',
+        id: 'target-dstl-u5',
+        dateStr: '2026-11-23',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
         unit: 'Unit 5',
@@ -611,17 +627,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-23',
+    dateStr: '2026-11-24',
     dayNumber: 15,
-    dayName: 'Monday',
-    formattedDate: '23 Nov 2026',
+    dayName: 'Tuesday',
+    formattedDate: '24 Nov 2026',
     phase: 'syllabus',
     phaseLabel: 'Syllabus Coverage',
     dsaBlockId: 'dsa-4',
     targets: [
       {
-        id: '2026-11-23-target-1',
-        dateStr: '2026-11-23',
+        id: 'target-dsa-u5',
+        dateStr: '2026-11-24',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
         unit: 'Unit 5',
@@ -629,8 +645,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Graphs and Sorting/Searching: BFS, DFS, Dijkstra algorithm, Minimum Spanning Tree (Prim, Kruskal), Hashing techniques.',
       },
       {
-        id: '2026-11-23-target-2',
-        dateStr: '2026-11-23',
+        id: 'target-hv-u5',
+        dateStr: '2026-11-24',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
         unit: 'Unit 5',
@@ -640,19 +656,19 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
 
-  // PHASE 2: First Revision Round (24 Nov – 30 Nov)
+  // PHASE 2: First Revision Round (25 Nov – 30 Nov, 6 Days)
   {
-    dateStr: '2026-11-24',
+    dateStr: '2026-11-25',
     dayNumber: 16,
-    dayName: 'Tuesday',
-    formattedDate: '24 Nov 2026',
+    dayName: 'Wednesday',
+    formattedDate: '25 Nov 2026',
     phase: 'revision_round_1',
     phaseLabel: 'First Revision Round',
     dsaBlockId: 'dsa-4',
     targets: [
       {
-        id: '2026-11-24-target-1',
-        dateStr: '2026-11-24',
+        id: 'target-rev-coa-1-2',
+        dateStr: '2026-11-25',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
         unit: 'Units 1 and 2',
@@ -663,17 +679,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-25',
+    dateStr: '2026-11-26',
     dayNumber: 17,
-    dayName: 'Wednesday',
-    formattedDate: '25 Nov 2026',
+    dayName: 'Thursday',
+    formattedDate: '26 Nov 2026',
     phase: 'revision_round_1',
     phaseLabel: 'First Revision Round',
     dsaBlockId: 'dsa-5',
     targets: [
       {
-        id: '2026-11-25-target-1',
-        dateStr: '2026-11-25',
+        id: 'target-rev-maths-1-2',
+        dateStr: '2026-11-26',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
         unit: 'Units 1 and 2',
@@ -684,17 +700,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-26',
+    dateStr: '2026-11-27',
     dayNumber: 18,
-    dayName: 'Thursday',
-    formattedDate: '26 Nov 2026',
+    dayName: 'Friday',
+    formattedDate: '27 Nov 2026',
     phase: 'revision_round_1',
     phaseLabel: 'First Revision Round',
     dsaBlockId: 'dsa-5',
     targets: [
       {
-        id: '2026-11-26-target-1',
-        dateStr: '2026-11-26',
+        id: 'target-rev-cyber-1-2',
+        dateStr: '2026-11-27',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
         unit: 'Units 1 and 2',
@@ -705,17 +721,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-27',
+    dateStr: '2026-11-28',
     dayNumber: 19,
-    dayName: 'Friday',
-    formattedDate: '27 Nov 2026',
+    dayName: 'Saturday',
+    formattedDate: '28 Nov 2026',
     phase: 'revision_round_1',
     phaseLabel: 'First Revision Round',
     dsaBlockId: 'dsa-5',
     targets: [
       {
-        id: '2026-11-27-target-1',
-        dateStr: '2026-11-27',
+        id: 'target-rev-dstl-1-2',
+        dateStr: '2026-11-28',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
         unit: 'Units 1 and 2',
@@ -726,17 +742,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-28',
+    dateStr: '2026-11-29',
     dayNumber: 20,
-    dayName: 'Saturday',
-    formattedDate: '28 Nov 2026',
+    dayName: 'Sunday',
+    formattedDate: '29 Nov 2026',
     phase: 'revision_round_1',
     phaseLabel: 'First Revision Round',
     dsaBlockId: 'dsa-5',
     targets: [
       {
-        id: '2026-11-28-target-1',
-        dateStr: '2026-11-28',
+        id: 'target-rev-dsa-1-2',
+        dateStr: '2026-11-29',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
         unit: 'Units 1 and 2',
@@ -747,17 +763,17 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
   {
-    dateStr: '2026-11-29',
+    dateStr: '2026-11-30',
     dayNumber: 21,
-    dayName: 'Sunday',
-    formattedDate: '29 Nov 2026',
+    dayName: 'Monday',
+    formattedDate: '30 Nov 2026',
     phase: 'revision_round_1',
     phaseLabel: 'First Revision Round',
     dsaBlockId: 'dsa-6',
     targets: [
       {
-        id: '2026-11-29-target-1',
-        dateStr: '2026-11-29',
+        id: 'target-rev-hv-1-2',
+        dateStr: '2026-11-30',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
         unit: 'Units 1 and 2',
@@ -765,19 +781,8 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
         details: 'Prepare crisp summary charts for Sanyam, Swasthya, Sukh, and self-exploration process.',
         isRevision: true,
       },
-    ],
-  },
-  {
-    dateStr: '2026-11-30',
-    dayNumber: 22,
-    dayName: 'Monday',
-    formattedDate: '2026-11-30',
-    phase: 'revision_round_1',
-    phaseLabel: 'First Revision Round',
-    dsaBlockId: 'dsa-6',
-    targets: [
       {
-        id: '2026-11-30-target-1',
+        id: 'target-rev-coa-3-5',
         dateStr: '2026-11-30',
         subject: 'Computer Organization and Architecture (COA)',
         subjectCode: 'COA',
@@ -789,10 +794,10 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     ],
   },
 
-  // PHASE 3: Final Revision + PYQs (1 Dec – 6 Dec)
+  // PHASE 3: Final Revision + PYQs (1 Dec – 6 Dec, 6 Days)
   {
     dateStr: '2026-12-01',
-    dayNumber: 23,
+    dayNumber: 22,
     dayName: 'Tuesday',
     formattedDate: '1 Dec 2026',
     phase: 'revision_final',
@@ -800,7 +805,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-6',
     targets: [
       {
-        id: '2026-12-01-target-1',
+        id: 'target-rev-maths-3-5',
         dateStr: '2026-12-01',
         subject: 'Mathematics-4',
         subjectCode: 'MATHS_4',
@@ -813,7 +818,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
   },
   {
     dateStr: '2026-12-02',
-    dayNumber: 24,
+    dayNumber: 23,
     dayName: 'Wednesday',
     formattedDate: '2 Dec 2026',
     phase: 'revision_final',
@@ -821,7 +826,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-6',
     targets: [
       {
-        id: '2026-12-02-target-1',
+        id: 'target-rev-cyber-3-5',
         dateStr: '2026-12-02',
         subject: 'Cyber Security',
         subjectCode: 'CYBER_SECURITY',
@@ -834,7 +839,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
   },
   {
     dateStr: '2026-12-03',
-    dayNumber: 25,
+    dayNumber: 24,
     dayName: 'Thursday',
     formattedDate: '3 Dec 2026',
     phase: 'revision_final',
@@ -842,7 +847,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-7',
     targets: [
       {
-        id: '2026-12-03-target-1',
+        id: 'target-rev-dstl-3-5',
         dateStr: '2026-12-03',
         subject: 'Discrete Structures and Theory of Logic (DSTL)',
         subjectCode: 'DSTL',
@@ -855,7 +860,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
   },
   {
     dateStr: '2026-12-04',
-    dayNumber: 26,
+    dayNumber: 25,
     dayName: 'Friday',
     formattedDate: '4 Dec 2026',
     phase: 'revision_final',
@@ -863,7 +868,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-7',
     targets: [
       {
-        id: '2026-12-04-target-1',
+        id: 'target-rev-dsa-3-5',
         dateStr: '2026-12-04',
         subject: 'Data Structures and Algorithms (DSA)',
         subjectCode: 'DSA',
@@ -876,7 +881,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
   },
   {
     dateStr: '2026-12-05',
-    dayNumber: 27,
+    dayNumber: 26,
     dayName: 'Saturday',
     formattedDate: '5 Dec 2026',
     phase: 'revision_final',
@@ -884,7 +889,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-7',
     targets: [
       {
-        id: '2026-12-05-target-1',
+        id: 'target-rev-hv-3-5',
         dateStr: '2026-12-05',
         subject: 'Human Values',
         subjectCode: 'HUMAN_VALUES',
@@ -897,7 +902,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
   },
   {
     dateStr: '2026-12-06',
-    dayNumber: 28,
+    dayNumber: 27,
     dayName: 'Sunday',
     formattedDate: '6 Dec 2026',
     phase: 'revision_final',
@@ -905,7 +910,7 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
     dsaBlockId: 'dsa-7',
     targets: [
       {
-        id: '2026-12-06-target-1',
+        id: 'target-rev-mock-exam',
         dateStr: '2026-12-06',
         subject: 'First Exam Subject & Mock PYQ',
         subjectCode: 'MOCK_EXAM',
@@ -918,6 +923,58 @@ export const SCHEDULE_DAYS: DaySchedule[] = [
   },
 ];
 
+// ORIGINAL SCHEDULE (9 Nov – 6 Dec 2026, 28 Days)
+export const ORIGINAL_SCHEDULE_DAYS: DaySchedule[] = [
+  {
+    dateStr: '2026-11-09',
+    dayNumber: 1,
+    dayName: 'Monday',
+    formattedDate: '9 Nov 2026',
+    phase: 'syllabus',
+    phaseLabel: 'Syllabus Coverage',
+    dsaBlockId: 'dsa-1',
+    targets: [
+      {
+        id: 'orig-target-coa-u1',
+        dateStr: '2026-11-09',
+        subject: 'Computer Organization and Architecture (COA)',
+        subjectCode: 'COA',
+        unit: 'Unit 1',
+        title: 'COA – Unit 1',
+        details: 'Functional units, bus structures, instruction codes, computer registers, and basic computer instructions.',
+      },
+      {
+        id: 'orig-target-maths-u1',
+        dateStr: '2026-11-09',
+        subject: 'Mathematics-4',
+        subjectCode: 'MATHS_4',
+        unit: 'Unit 1',
+        title: 'Maths-4 – Unit 1',
+        details: 'Partial Differential Equations, formation of PDE, Lagrange linear equations, first-order non-linear PDE.',
+      },
+    ],
+  },
+  // Map rest similarly...
+  ...SHIFTED_SCHEDULE_DAYS.filter(d => d.dayNumber >= 1).map((d, idx) => ({
+    ...d,
+    dayNumber: idx + 2,
+    targets: d.targets.map(t => ({ ...t, id: `orig-${t.id}` })),
+  })),
+];
+
+// Export aliases for backwards compatibility
+export const SCHEDULE_DAYS = SHIFTED_SCHEDULE_DAYS;
+export const DSA_PRACTICE_BLOCKS = SHIFTED_DSA_BLOCKS;
+
+// Helper to get active days based on mode
+export function getScheduleDays(mode: ScheduleMode = 'shifted'): DaySchedule[] {
+  return mode === 'shifted' ? SHIFTED_SCHEDULE_DAYS : ORIGINAL_SCHEDULE_DAYS;
+}
+
+export function getDSABlocks(mode: ScheduleMode = 'shifted'): DSAPracticeBlock[] {
+  return mode === 'shifted' ? SHIFTED_DSA_BLOCKS : SHIFTED_DSA_BLOCKS;
+}
+
 export const DAILY_CHECKLIST_TEMPLATE = [
   { id: 'check-1', text: 'Finish both semester subject targets listed for the day.' },
   { id: 'check-2', text: 'Complete the separate DSA practice target.' },
@@ -926,6 +983,7 @@ export const DAILY_CHECKLIST_TEMPLATE = [
 ];
 
 export const MOTIVATIONAL_QUOTES = [
+  "Today is Day 1 of your mission. Start strong, stay focused, succeed!",
   "One Day. Two Targets. One Step Closer to Success.",
   "Consistency beats talent when talent doesn't work hard.",
   "Every unit completed today is a guarantee of confidence in the exam hall.",

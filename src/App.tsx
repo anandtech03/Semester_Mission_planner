@@ -23,15 +23,18 @@ export function App() {
     systemTodayStr,
     simulatedDateStr,
     selectedDateStr,
+    scheduleMode,
     filter,
     completedTargetIds,
     completedDSATopicIds,
     dailyNotes,
     dailyChecklist,
+    activeScheduleDays,
     todaySchedule,
     selectedSchedule,
     currentDSABlock,
     stats,
+    setScheduleMode,
     setSelectedDateStr,
     setSimulatedDateStr,
     setFilter,
@@ -57,6 +60,8 @@ export function App() {
         systemTodayStr={systemTodayStr}
         simulatedDateStr={simulatedDateStr}
         onSetSimulatedDate={setSimulatedDateStr}
+        scheduleMode={scheduleMode}
+        onSetScheduleMode={setScheduleMode}
         onOpenResetModal={() => setIsResetModalOpen(true)}
         onOpenTimerModal={() => setIsTimerModalOpen(true)}
         stats={stats}
@@ -93,6 +98,7 @@ export function App() {
               selectedDateStr={selectedDateStr}
               onSelectDate={setSelectedDateStr}
               completedTargetIds={completedTargetIds}
+              activeScheduleDays={activeScheduleDays}
             />
 
             {/* Daily Targets & Study Notes */}
@@ -105,6 +111,7 @@ export function App() {
                 onToggleTarget={toggleTarget}
                 filter={filter}
                 onFilterChange={setFilter}
+                activeScheduleDays={activeScheduleDays}
               />
 
               <DailyNotesAndChecklist
@@ -114,6 +121,7 @@ export function App() {
                 onSaveDailyNote={saveDailyNote}
                 dailyChecklist={dailyChecklist}
                 onToggleChecklistItem={toggleChecklistItem}
+                activeScheduleDays={activeScheduleDays}
               />
             </div>
           </div>
@@ -129,6 +137,7 @@ export function App() {
               selectedDateStr={selectedDateStr}
               onSelectDate={setSelectedDateStr}
               completedTargetIds={completedTargetIds}
+              activeScheduleDays={activeScheduleDays}
             />
 
             <DailyTargetsList
@@ -139,6 +148,7 @@ export function App() {
               onToggleTarget={toggleTarget}
               filter={filter}
               onFilterChange={setFilter}
+              activeScheduleDays={activeScheduleDays}
             />
           </div>
         )}
@@ -166,6 +176,7 @@ export function App() {
               onToggleTarget={toggleTarget}
               filter={filter}
               onFilterChange={setFilter}
+              activeScheduleDays={activeScheduleDays}
             />
           </div>
         )}
@@ -193,6 +204,7 @@ export function App() {
                 setSelectedDateStr(dateStr);
                 setActiveTab('daily_targets');
               }}
+              activeScheduleDays={activeScheduleDays}
             />
           </div>
         )}
@@ -207,6 +219,7 @@ export function App() {
               onSaveDailyNote={saveDailyNote}
               dailyChecklist={dailyChecklist}
               onToggleChecklistItem={toggleChecklistItem}
+              activeScheduleDays={activeScheduleDays}
             />
           </div>
         )}
@@ -221,7 +234,7 @@ export function App() {
               DECEMBER EXAM MISSION 2026
             </div>
             <div className="text-[11px] text-slate-500 mt-0.5">
-              One Day. Two Targets. One Step Closer to Success. · 9 Nov – 6 Dec 2026
+              One Day. Two Targets. One Step Closer to Success. · Shifted to 10 Nov – 6 Dec 2026
             </div>
           </div>
 

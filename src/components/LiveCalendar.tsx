@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { 
-  Calendar as CalendarIcon, 
   CheckCircle, 
-  Clock, 
   Check,
-  ChevronRight
+  Calendar as CalendarIcon
 } from 'lucide-react';
 import { DaySchedule } from '../types';
-import { SCHEDULE_DAYS, SUBJECT_METAS } from '../data/studyPlanData';
-import { isDateInPast, isDateCurrent, isDateInFuture, formatISTDate } from '../utils/dateUtils';
+import { isDateInPast, isDateCurrent, formatISTDate } from '../utils/dateUtils';
 
 interface LiveCalendarProps {
   todayStr: string;
   selectedDateStr: string;
   onSelectDate: (dateStr: string) => void;
   completedTargetIds: string[];
+  activeScheduleDays: DaySchedule[];
 }
 
 export const LiveCalendar: React.FC<LiveCalendarProps> = ({
@@ -22,17 +20,18 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
   selectedDateStr,
   onSelectDate,
   completedTargetIds,
+  activeScheduleDays,
 }) => {
   const [calendarView, setCalendarView] = useState<'all' | 'november' | 'december'>('all');
 
-  const novemberDays = SCHEDULE_DAYS.filter(d => d.dateStr.startsWith('2026-11'));
-  const decemberDays = SCHEDULE_DAYS.filter(d => d.dateStr.startsWith('2026-12'));
+  const novemberDays = activeScheduleDays.filter(d => d.dateStr.startsWith('2026-11'));
+  const decemberDays = activeScheduleDays.filter(d => d.dateStr.startsWith('2026-12'));
 
   const displayedDays = calendarView === 'november' 
     ? novemberDays 
     : calendarView === 'december' 
     ? decemberDays 
-    : SCHEDULE_DAYS;
+    : activeScheduleDays;
 
   return (
     <section className="w-full glass-panel p-5 sm:p-6 rounded-2xl border border-slate-800/80 shadow-xl">
@@ -49,7 +48,7 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-0.5">
-            9 November 2026 – 6 December 2026 • 28 Days Timetable
+            Mission Timeline (Rescheduled 10 Nov – 6 Dec 2026 · 27 Active Days)
           </p>
         </div>
 
@@ -57,33 +56,33 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
         <div className="flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800 self-start sm:self-auto">
           <button
             onClick={() => setCalendarView('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               calendarView === 'all'
                 ? 'bg-slate-800 text-white shadow-sm border border-slate-700'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            All 28 Days
+            All Days
           </button>
           <button
             onClick={() => setCalendarView('november')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               calendarView === 'november'
                 ? 'bg-slate-800 text-white shadow-sm border border-slate-700'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Nov (22 Days)
+            November
           </button>
           <button
             onClick={() => setCalendarView('december')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               calendarView === 'december'
                 ? 'bg-slate-800 text-white shadow-sm border border-slate-700'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Dec (6 Days)
+            December (6 Days)
           </button>
         </div>
       </div>
@@ -94,12 +93,12 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
           <span className="w-3 h-3 rounded bg-slate-800 border border-slate-700 line-through text-[9px] text-slate-500 flex items-center justify-center">
             -
           </span>
-          <span>Past Days (Auto Strikethrough)</span>
+          <span>Past / Shifted Days (Auto Strikethrough)</span>
         </div>
 
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
-          <span className="text-cyan-300 font-medium">Today</span>
+          <span className="text-cyan-300 font-medium">Today (Day 1)</span>
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -116,7 +115,8 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
       {/* Calendar Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2.5 mt-4">
         {displayedDays.map((day) => {
-          const isPast = isDateInPast(day.dateStr, todayStr);
+          const isShiftedDay = day.dayNumber === 0;
+          const isPast = isDateInPast(day.dateStr, todayStr) || isShiftedDay;
           const isToday = isDateCurrent(day.dateStr, todayStr);
           const isSelected = selectedDateStr === day.dateStr;
 
@@ -160,6 +160,10 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
                     <span className="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-cyan-400 text-slate-950">
                       TODAY
                     </span>
+                  ) : isShiftedDay ? (
+                    <span className="text-[9px] text-amber-400 font-mono px-1 rounded bg-amber-500/10 border border-amber-500/20">
+                      Shifted
+                    </span>
                   ) : isPast ? (
                     <span className="text-[9px] text-slate-500 font-mono">
                       Passed
@@ -174,40 +178,52 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
                 <div className="text-[10px] text-slate-500 mt-0.5 flex items-center justify-between">
                   <span>{day.dayName.slice(0, 3)}</span>
                   <span className="text-[9px] text-slate-400">
-                    {day.phase === 'syllabus' ? 'Syllabus' : day.phase === 'revision_round_1' ? 'Rev 1' : 'PYQ'}
+                    {isShiftedDay ? 'Rescheduled' : day.phase === 'syllabus' ? 'Syllabus' : day.phase === 'revision_round_1' ? 'Rev 1' : 'PYQ'}
                   </span>
                 </div>
               </div>
 
               {/* Target Mini Badges */}
               <div className="my-2 space-y-1">
-                {day.targets.map((target) => {
-                  const isDone = completedTargetIds.includes(target.id);
-                  return (
-                    <div 
-                      key={target.id}
-                      className={`text-[9.5px] px-1.5 py-0.5 rounded truncate font-medium flex items-center justify-between ${
-                        isDone 
-                          ? 'bg-emerald-500/10 text-emerald-400 line-through' 
-                          : 'bg-slate-800/70 text-slate-300'
-                      }`}
-                      title={target.title}
-                    >
-                      <span className="truncate">{target.title}</span>
-                      {isDone && <Check className="w-2.5 h-2.5 ml-1 text-emerald-400 flex-shrink-0" />}
-                    </div>
-                  );
-                })}
+                {isShiftedDay ? (
+                  <div className="text-[9px] text-amber-400/70 italic px-1">
+                    Moved to 10 Nov (Today)
+                  </div>
+                ) : (
+                  day.targets.map((target) => {
+                    const isDone = completedTargetIds.includes(target.id);
+                    return (
+                      <div 
+                        key={target.id}
+                        className={`text-[9.5px] px-1.5 py-0.5 rounded truncate font-medium flex items-center justify-between ${
+                          isDone 
+                            ? 'bg-emerald-500/10 text-emerald-400 line-through' 
+                            : 'bg-slate-800/70 text-slate-300'
+                        }`}
+                        title={target.title}
+                      >
+                        <span className="truncate">{target.title}</span>
+                        {isDone && <Check className="w-2.5 h-2.5 ml-1 text-emerald-400 flex-shrink-0" />}
+                      </div>
+                    );
+                  })
+                )}
               </div>
 
               {/* Footer: Progress */}
               <div className="pt-1 border-t border-slate-800/40 flex items-center justify-between text-[10px]">
-                <span className={`font-mono ${isDayFullyComplete ? 'text-emerald-400 font-medium' : 'text-slate-500'}`}>
-                  {dayCompletedCount}/{day.targets.length} done
-                </span>
+                {isShiftedDay ? (
+                  <span className="text-[9px] text-slate-500 font-mono">Shifted Day</span>
+                ) : (
+                  <>
+                    <span className={`font-mono ${isDayFullyComplete ? 'text-emerald-400 font-medium' : 'text-slate-500'}`}>
+                      {dayCompletedCount}/{day.targets.length} done
+                    </span>
 
-                {isDayFullyComplete && (
-                  <CheckCircle className="w-3 h-3 text-emerald-400" />
+                    {isDayFullyComplete && (
+                      <CheckCircle className="w-3 h-3 text-emerald-400" />
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -229,7 +245,7 @@ export const LiveCalendar: React.FC<LiveCalendarProps> = ({
             onClick={() => onSelectDate(todayStr)}
             className="text-cyan-400 hover:text-cyan-300 font-medium text-xs cursor-pointer"
           >
-            ← Jump to Today
+            ← Jump to Today (10 Nov)
           </button>
         )}
       </div>
