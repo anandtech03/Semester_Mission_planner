@@ -9,8 +9,10 @@ A modern, minimalist, animated study planner and live calendar dashboard designe
 
 ## 🚀 Live Access
 
-The dashboard is running live locally:
-- **Local URL:** [http://localhost:5173/](http://localhost:5173/)
+- **Production URL:** [https://iso123.netlify.app/](https://iso123.netlify.app/)
+- **Local development:** Run `npm install` and `npm run dev`, then open [http://localhost:5173/](http://localhost:5173/).
+
+Netlify builds the project with `npm run build` and publishes the `dist` folder. The production URL becomes available after a successful production deployment.
 
 ---
 
